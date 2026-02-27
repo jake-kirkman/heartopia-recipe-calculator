@@ -25,7 +25,7 @@ export const crops: CropData[] = [
     seedCost: 10,
     growthTime: '15 min',
     growthMinutes: 15,
-    sellPrices: { star1: 30, star2: 40, star3: 50, star4: 60, star5: 70 },
+    sellPrice: 30,
   },
   {
     id: 'potato',
@@ -34,7 +34,7 @@ export const crops: CropData[] = [
     seedCost: 30,
     growthTime: '1 hr',
     growthMinutes: 60,
-    sellPrices: { star1: 90, star2: 120, star3: 150, star4: 180, star5: 210 },
+    sellPrice: 90,
   },
   {
     id: 'wheat',
@@ -43,7 +43,7 @@ export const crops: CropData[] = [
     seedCost: 95,
     growthTime: '4 hr',
     growthMinutes: 240,
-    sellPrices: { star1: 285, star2: 381, star3: 475, star4: 570, star5: 665 },
+    sellPrice: 285,
   },
   {
     id: 'lettuce',
@@ -52,7 +52,7 @@ export const crops: CropData[] = [
     seedCost: 145,
     growthTime: '8 hr',
     growthMinutes: 480,
-    sellPrices: { star1: 435, star2: 582, star3: 726, star4: 870, star5: 1015 },
+    sellPrice: 435,
   },
   {
     id: 'pineapple',
@@ -61,7 +61,7 @@ export const crops: CropData[] = [
     seedCost: 15,
     growthTime: '30 min',
     growthMinutes: 30,
-    sellPrices: { star1: 52, star2: 69, star3: 86, star4: 103, star5: 120 },
+    sellPrice: 52,
   },
   {
     id: 'carrot',
@@ -70,7 +70,7 @@ export const crops: CropData[] = [
     seedCost: 50,
     growthTime: '2 hr',
     growthMinutes: 120,
-    sellPrices: { star1: 155, star2: 207, star3: 258, star4: 310, star5: 362 },
+    sellPrice: 155,
   },
   {
     id: 'strawberry',
@@ -79,7 +79,7 @@ export const crops: CropData[] = [
     seedCost: 125,
     growthTime: '6 hr',
     growthMinutes: 360,
-    sellPrices: { star1: 375, star2: 502, star3: 626, star4: 751, star5: 876 },
+    sellPrice: 375,
   },
   {
     id: 'corn',
@@ -88,7 +88,7 @@ export const crops: CropData[] = [
     seedCost: 170,
     growthTime: '12 hr',
     growthMinutes: 720,
-    sellPrices: { star1: 512, star2: 690, star3: 860, star4: 1032, star5: 1204 },
+    sellPrice: 512,
   },
   {
     id: 'grape',
@@ -97,7 +97,7 @@ export const crops: CropData[] = [
     seedCost: 160,
     growthTime: '10 hr',
     growthMinutes: 600,
-    sellPrices: { star1: 480, star2: 643, star3: 801, star4: 961, star5: 1121 },
+    sellPrice: 480,
   },
   {
     id: 'eggplant',
@@ -106,7 +106,7 @@ export const crops: CropData[] = [
     seedCost: 135,
     growthTime: '7 hr',
     growthMinutes: 420,
-    sellPrices: { star1: 405, star2: 544, star3: 680, star4: 816, star5: 952 },
+    sellPrice: 405,
   },
   {
     id: 'tea-tree',
@@ -115,7 +115,7 @@ export const crops: CropData[] = [
     seedCost: 25,
     growthTime: 'TBD',
     growthMinutes: 0,
-    sellPrices: { star1: 75, star2: null, star3: null, star4: null, star5: null },
+    sellPrice: 75,
   },
   {
     id: 'cacao-tree',
@@ -124,7 +124,7 @@ export const crops: CropData[] = [
     seedCost: 110,
     growthTime: 'TBD',
     growthMinutes: 0,
-    sellPrices: { star1: 330, star2: null, star3: null, star4: null, star5: null },
+    sellPrice: 330,
   },
   {
     id: 'avocado',
@@ -133,7 +133,7 @@ export const crops: CropData[] = [
     seedCost: 180,
     growthTime: 'TBD',
     growthMinutes: 0,
-    sellPrices: { star1: 540, star2: null, star3: null, star4: null, star5: null },
+    sellPrice: 540,
   },
 ];
 

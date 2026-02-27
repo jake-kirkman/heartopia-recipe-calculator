@@ -1,12 +1,11 @@
 import type { StarRating, Recipe, BatchItem, AggregatedIngredient, BatchSummary } from '../data/types';
 import { ingredients } from '../data/ingredients';
 import { recipes } from '../data/recipes';
-
-const starKey = (star: StarRating): keyof Recipe['sellPrices'] =>
-  `star${star}` as keyof Recipe['sellPrices'];
+import { STAR_MULTIPLIERS } from '../data/constants';
 
 export function getSellPrice(recipe: Recipe, star: StarRating): number | null {
-  return recipe.sellPrices[starKey(star)];
+  if (recipe.basePrice === null) return null;
+  return Math.round(recipe.basePrice * STAR_MULTIPLIERS[star]);
 }
 
 export function getProfit(recipe: Recipe, star: StarRating): number | null {

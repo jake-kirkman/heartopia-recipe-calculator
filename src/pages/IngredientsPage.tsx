@@ -106,7 +106,7 @@ function FarmedTable() {
         </thead>
         <tbody className="divide-y divide-peach/20">
           {crops.map((crop) => {
-            const sell1 = crop.sellPrices.star1;
+            const sell1 = crop.sellPrice;
             const profit =
               sell1 !== null ? sell1 - crop.seedCost : null;
 

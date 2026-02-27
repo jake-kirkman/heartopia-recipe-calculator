@@ -36,14 +36,6 @@ export interface RecipeIngredient {
   quantity: number;
 }
 
-export interface StarPrices {
-  star1: number | null;
-  star2: number | null;
-  star3: number | null;
-  star4: number | null;
-  star5: number | null;
-}
-
 export interface Recipe {
   id: string;
   name: string;
@@ -51,7 +43,7 @@ export interface Recipe {
   category: RecipeCategory;
   ingredients: RecipeIngredient[];
   costToMake: number | null;
-  sellPrices: StarPrices;
+  basePrice: number | null;
   energy: number | null;
   buff?: string;
   unlock: {
@@ -71,7 +63,7 @@ export interface CropData {
   seedCost: number;
   growthTime: string;
   growthMinutes: number;
-  sellPrices: StarPrices;
+  sellPrice: number | null;
 }
 
 export type StarRating = 1 | 2 | 3 | 4 | 5;
