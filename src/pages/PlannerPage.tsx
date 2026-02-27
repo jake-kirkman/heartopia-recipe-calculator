@@ -47,7 +47,8 @@ export function PlannerPage() {
 
   // Inventory integration
   const [useInventory, setUseInventory] = useLocalStorage<boolean>('heartopia-use-inventory', false);
-  const [inventory] = useLocalStorage<Record<string, number>>('heartopia-inventory', {});
+  const [inventory, setInventory] = useLocalStorage<Record<string, number>>('heartopia-inventory', {});
+  const [confirmDeduct, setConfirmDeduct] = useState(false);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -165,12 +166,36 @@ export function PlannerPage() {
     }
   };
 
+  const handleDeductAndClear = () => {
+    if (confirmDeduct) {
+      setInventory((prev) => {
+        const updated = { ...prev };
+        for (const ing of summary.ingredients) {
+          if (ing.ingredientId in updated) {
+            updated[ing.ingredientId] = Math.max(0, (updated[ing.ingredientId] ?? 0) - ing.totalQuantity);
+          }
+        }
+        return updated;
+      });
+      clearItems();
+      setConfirmDeduct(false);
+    } else {
+      setConfirmDeduct(true);
+    }
+  };
+
   // Reset clear confirmation after a few seconds
   useEffect(() => {
     if (!confirmClear) return;
     const timer = setTimeout(() => setConfirmClear(false), 3000);
     return () => clearTimeout(timer);
   }, [confirmClear]);
+
+  useEffect(() => {
+    if (!confirmDeduct) return;
+    const timer = setTimeout(() => setConfirmDeduct(false), 3000);
+    return () => clearTimeout(timer);
+  }, [confirmDeduct]);
 
   // Empty state
   if (items.length === 0) {
@@ -673,6 +698,20 @@ export function PlannerPage() {
           Main values assume every dish is the star rating you selected. Expected values are the weighted average across all star levels using your star odds.
         </p>
       </section>
+
+      {/* Deduct Inventory and Clear */}
+      {useInventory && (
+        <button
+          onClick={handleDeductAndClear}
+          className={`w-full py-4 rounded-xl text-lg font-bold border-none cursor-pointer transition-colors ${
+            confirmDeduct
+              ? 'bg-coral text-white'
+              : 'bg-sage text-white hover:bg-sage/80'
+          }`}
+        >
+          {confirmDeduct ? 'Click again to confirm' : 'Deduct Inventory and Clear'}
+        </button>
+      )}
 
       {/* Recipe Detail Modal */}
       {selectedRecipe && (
