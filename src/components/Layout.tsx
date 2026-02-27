@@ -118,8 +118,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="border-t border-peach/30 py-4 text-center text-sm text-wood/60">
+      <footer className="border-t border-peach/30 py-4 text-center text-sm text-wood/60 space-y-1">
         <p>Heartopia Recipe Calculator - Fan-made tool. Not affiliated with the game developers.</p>
+        <p>
+          Got a feature idea, found a bug, or have better figures?{' '}
+          <a
+            href="https://github.com/jake-kirkman/heartopia-recipe-calculator/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-coral hover:text-coral/80 underline"
+          >
+            Raise an issue on GitHub
+          </a>
+        </p>
       </footer>
     </div>
   );
