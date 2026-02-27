@@ -21,11 +21,13 @@ interface RecipeCardProps {
   recipe: Recipe;
   star: StarRatingType;
   onOpen: () => void;
-  onAdd: () => void;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  plannerQuantity: number;
   extraInfo?: ReactNode;
 }
 
-export function RecipeCard({ recipe, star, onOpen, onAdd, extraInfo }: RecipeCardProps) {
+export function RecipeCard({ recipe, star, onOpen, onIncrement, onDecrement, plannerQuantity, extraInfo }: RecipeCardProps) {
   const sell = getSellPrice(recipe, star);
   const profit = getProfit(recipe, star);
 
@@ -37,16 +39,36 @@ export function RecipeCard({ recipe, star, onOpen, onAdd, extraInfo }: RecipeCar
       {/* Header row */}
       <div className="flex items-start justify-between gap-2">
         <h3 className="font-bold text-bark leading-tight">{recipe.name}</h3>
-        <button
-          title="Add to Planner"
-          onClick={(e) => {
-            e.stopPropagation();
-            onAdd();
-          }}
-          className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-sage/20 text-bark hover:bg-sage/40 transition-colors text-lg leading-none font-bold"
-        >
-          +
-        </button>
+        {plannerQuantity === 0 ? (
+          <button
+            title="Add to Planner"
+            onClick={(e) => {
+              e.stopPropagation();
+              onIncrement();
+            }}
+            className="shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-sage/20 text-bark hover:bg-sage/40 transition-colors text-lg leading-none font-bold"
+          >
+            +
+          </button>
+        ) : (
+          <div className="shrink-0 flex items-center gap-0.5" onClick={(e) => e.stopPropagation()}>
+            <button
+              title="Remove one from Planner"
+              onClick={onDecrement}
+              className="w-7 h-7 flex items-center justify-center rounded-full bg-peach/30 text-bark hover:bg-peach/60 transition-colors text-sm leading-none font-bold"
+            >
+              &minus;
+            </button>
+            <span className="w-7 text-center text-sm font-semibold text-bark select-none">{plannerQuantity}</span>
+            <button
+              title="Add one to Planner"
+              onClick={onIncrement}
+              className="w-7 h-7 flex items-center justify-center rounded-full bg-sage/20 text-bark hover:bg-sage/40 transition-colors text-sm leading-none font-bold"
+            >
+              +
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Badges */}

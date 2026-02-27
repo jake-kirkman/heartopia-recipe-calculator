@@ -5,6 +5,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 interface BatchPlannerContextType {
   items: BatchItem[];
   addItem: (recipeId: string, quantity?: number, starRating?: StarRating) => void;
+  decrementItem: (recipeId: string, starRating?: StarRating) => void;
   removeItem: (index: number) => void;
   updateItem: (index: number, updates: Partial<BatchItem>) => void;
   clearItems: () => void;
@@ -27,6 +28,19 @@ export function BatchPlannerProvider({ children }: { children: ReactNode }) {
     });
   }, [setItems]);
 
+  const decrementItem = useCallback((recipeId: string, starRating: StarRating = 1) => {
+    setItems((prev) => {
+      const index = prev.findIndex((i) => i.recipeId === recipeId && i.starRating === starRating);
+      if (index < 0) return prev;
+      if (prev[index].quantity <= 1) {
+        return prev.filter((_, i) => i !== index);
+      }
+      const updated = [...prev];
+      updated[index] = { ...updated[index], quantity: updated[index].quantity - 1 };
+      return updated;
+    });
+  }, [setItems]);
+
   const removeItem = useCallback((index: number) => {
     setItems((prev) => prev.filter((_, i) => i !== index));
   }, [setItems]);
@@ -44,7 +58,7 @@ export function BatchPlannerProvider({ children }: { children: ReactNode }) {
   }, [setItems]);
 
   return (
-    <BatchPlannerContext.Provider value={{ items, addItem, removeItem, updateItem, clearItems }}>
+    <BatchPlannerContext.Provider value={{ items, addItem, decrementItem, removeItem, updateItem, clearItems }}>
       {children}
     </BatchPlannerContext.Provider>
   );
