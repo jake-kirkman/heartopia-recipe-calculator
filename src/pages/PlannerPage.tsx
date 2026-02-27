@@ -594,7 +594,8 @@ export function PlannerPage() {
               Shopping List (Massimo's Store)
             </h2>
           </div>
-          <div className="overflow-x-auto md:overflow-x-clip">
+          {/* Desktop table */}
+          <div className="hidden md:block md:overflow-x-clip">
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-left text-wood">
@@ -641,6 +642,36 @@ export function PlannerPage() {
                 })}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile cards */}
+          <div className="md:hidden divide-y divide-coral/10">
+            {shopIngredients.map((ing) => {
+              const ingData = ingredients[ing.ingredientId];
+              const name = ingData?.name ?? ing.ingredientId;
+              const isBottleneck = ing.daysNeeded !== null && ing.daysNeeded > 1;
+
+              return (
+                <div
+                  key={ing.ingredientId}
+                  className={`p-4 space-y-1.5 ${isBottleneck ? 'bg-coral/10' : ''}`}
+                >
+                  <div className={`font-medium ${isBottleneck ? 'text-coral' : 'text-bark'}`}>
+                    {name}
+                    {isBottleneck && <span className="ml-1.5 text-xs">!!!</span>}
+                  </div>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                    <span className="text-wood">Qty: <span className="text-bark font-medium">{ing.totalQuantity}</span></span>
+                    <span className="text-wood">Cost/ea: <span className="text-bark">{formatGold(ing.unitCost)}</span></span>
+                    <span className="text-wood">Total: <span className="text-bark font-semibold">{formatGold(ing.totalCost)}</span></span>
+                  </div>
+                  <div className="flex flex-wrap gap-x-4 text-sm">
+                    <span className="text-wood">Daily Limit: <span className="text-bark">{ing.dailyLimit ?? '-'}</span></span>
+                    <span className="text-wood">Days: <span className={`font-semibold ${isBottleneck ? 'text-coral' : 'text-bark'}`}>{ing.daysNeeded ?? '-'}</span></span>
+                  </div>
+                </div>
+              );
+            })}
           </div>
           <div className="px-5 py-3 border-t border-coral/20 bg-coral/5 flex items-center gap-2">
             <span className="text-sm text-wood">Total Shopping Days:</span>
