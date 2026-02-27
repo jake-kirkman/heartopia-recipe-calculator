@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { ingredients } from '../data/ingredients';
-import { crops } from '../data/crops';
+import { crops, INGREDIENT_TO_CROP_ID } from '../data/crops';
 import type { Ingredient } from '../data/types';
 import { formatGold } from '../utils/formatters';
 import { Badge, TbdBadge } from '../components/Badge';
+
+const CROP_TO_INGREDIENT: Record<string, string> = {};
+for (const [ingId, cropId] of Object.entries(INGREDIENT_TO_CROP_ID)) {
+  CROP_TO_INGREDIENT[cropId] = ingId;
+}
 
 type TabKey = 'shop' | 'foraged' | 'farmed' | 'fished' | 'special';
 
@@ -42,7 +47,10 @@ function ShopTable() {
         <tbody className="divide-y divide-peach/20">
           {items.map((item) => (
             <tr key={item.id} className="hover:bg-cream/40 transition-colors">
-              <td className="px-4 py-3 font-medium text-bark">{item.name}</td>
+              <td className="px-4 py-3 font-medium text-bark">
+                {item.emoji && <span className="mr-1.5">{item.emoji}</span>}
+                {item.name}
+              </td>
               <td className="px-4 py-3 text-bark">
                 {item.cost !== null ? (
                   <Badge variant="coral">{formatGold(item.cost)}</Badge>
@@ -78,6 +86,7 @@ function ForagedGrid() {
           key={item.id}
           className="rounded-xl bg-white shadow-sm border border-peach/30 p-4 flex flex-col items-center gap-2 text-center"
         >
+          {item.emoji && <span className="text-2xl">{item.emoji}</span>}
           <span className="font-medium text-bark">{item.name}</span>
           <Badge variant="sage">Free</Badge>
         </div>
@@ -116,6 +125,7 @@ function FarmedTable() {
                 className="hover:bg-cream/40 transition-colors"
               >
                 <td className="px-4 py-3 font-medium text-bark">
+                  {(() => { const ing = ingredients[CROP_TO_INGREDIENT[crop.id]]; return ing?.emoji ? <span className="mr-1.5">{ing.emoji}</span> : null; })()}
                   {crop.name}
                 </td>
                 <td className="px-4 py-3 text-wood">{crop.gardeningLevel}</td>
@@ -169,6 +179,7 @@ function FishedList() {
           key={item.id}
           className="rounded-xl bg-white shadow-sm border border-peach/30 p-4 flex flex-col items-center gap-2 text-center"
         >
+          {item.emoji && <span className="text-2xl">{item.emoji}</span>}
           <span className="font-medium text-bark">{item.name}</span>
           <Badge variant="sky">Free</Badge>
           {item.notes && (
@@ -210,6 +221,7 @@ function SpecialTable() {
                 className="hover:bg-cream/40 transition-colors"
               >
                 <td className="px-4 py-3 font-medium text-bark">
+                  {item.emoji && <span className="mr-1.5">{item.emoji}</span>}
                   {item.name}
                 </td>
                 <td className="px-4 py-3">

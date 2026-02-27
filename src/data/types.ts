@@ -27,6 +27,7 @@ export interface Ingredient {
   source: IngredientSource;
   cost: number | null; // null = free or TBD
   dailyLimit: number | null; // null = no limit
+  emoji?: string;
   isWildcard?: boolean; // "Any Fish", "Any Fruit", etc.
   wildcardOptions?: string[]; // ingredient IDs that satisfy this wildcard
   notes?: string;

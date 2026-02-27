@@ -9,6 +9,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 50,
     dailyLimit: 50,
+    emoji: '\u{1F95B}',
   },
   eggs: {
     id: 'eggs',
@@ -16,6 +17,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 100,
     dailyLimit: 50,
+    emoji: '\u{1F95A}',
   },
   cheese: {
     id: 'cheese',
@@ -23,6 +25,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 100,
     dailyLimit: 50,
+    emoji: '\u{1F9C0}',
   },
   butter: {
     id: 'butter',
@@ -30,6 +33,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 150,
     dailyLimit: 50,
+    emoji: '\u{1F9C8}',
   },
   meat: {
     id: 'meat',
@@ -37,6 +41,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 200,
     dailyLimit: 50,
+    emoji: '\u{1F969}',
   },
   'coffee-beans': {
     id: 'coffee-beans',
@@ -44,6 +49,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 50,
     dailyLimit: 50,
+    emoji: '\u2615',
   },
   frosting: {
     id: 'frosting',
@@ -51,6 +57,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 50,
     dailyLimit: 50,
+    emoji: '\u2744\uFE0F',
     notes: 'Winter Frost event ingredient',
   },
   flour: {
@@ -59,6 +66,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 50,
     dailyLimit: 50,
+    emoji: '\u{1F35A}',
   },
   sugar: {
     id: 'sugar',
@@ -66,34 +74,39 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 75,
     dailyLimit: 50,
+    emoji: '\u{1F36C}',
   },
   'cooking-oil': {
     id: 'cooking-oil',
     name: 'Cooking Oil',
     source: 'shop',
     cost: 100,
-    dailyLimit: 50
+    dailyLimit: 50,
+    emoji: '\u{1FAD2}',
   },
   'tea-leaves': {
     id: 'tea-leaves',
     name: 'Tea Leaves',
     source: 'shop',
     cost: 250,
-    dailyLimit: 50
+    dailyLimit: 50,
+    emoji: '\u{1FAB6}',
   },
   'matcha-powder': {
     id: 'matcha-powder',
     name: 'Matcha Powder',
     source: 'shop',
     cost: 250,
-    dailyLimit: 50
+    dailyLimit: 50,
+    emoji: '\u{1F375}',
   },
   'red-bean': {
     id: 'red-bean',
     name: 'Red Bean',
     source: 'shop',
     cost: 50,
-    dailyLimit: 50
+    dailyLimit: 50,
+    emoji: '\u{1FAD8}',
   },
   'pasteurized-egg': {
     id: 'pasteurized-egg',
@@ -101,6 +114,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'shop',
     cost: 100,
     dailyLimit: 50,
+    emoji: '\u{1F95A}',
   },
 
   // ─── Doris (Special Merchant) ───────────────────────────────────────
@@ -111,6 +125,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'special',
     cost: null,
     dailyLimit: null,
+    emoji: '\u{1F535}',
     notes: 'Purchased from Doris',
   },
   'indigo-sugar': {
@@ -119,6 +134,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'special',
     cost: null,
     dailyLimit: null,
+    emoji: '\u{1F7E3}',
     notes: 'Purchased from Doris',
   },
   'violet-sugar': {
@@ -127,6 +143,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'special',
     cost: null,
     dailyLimit: null,
+    emoji: '\u{1F7E3}',
     notes: 'Purchased from Doris',
   },
   'green-sugar': {
@@ -135,6 +152,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'special',
     cost: null,
     dailyLimit: null,
+    emoji: '\u{1F7E2}',
     notes: 'Purchased from Doris',
   },
   'orange-sugar': {
@@ -143,6 +161,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'special',
     cost: null,
     dailyLimit: null,
+    emoji: '\u{1F7E0}',
     notes: 'Purchased from Doris',
   },
   'red-sugar': {
@@ -151,6 +170,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'special',
     cost: null,
     dailyLimit: null,
+    emoji: '\u{1F534}',
     notes: 'Purchased from Doris',
   },
   'yellow-sugar': {
@@ -159,6 +179,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'special',
     cost: null,
     dailyLimit: null,
+    emoji: '\u{1F7E1}',
     notes: 'Purchased from Doris',
   },
 
@@ -170,6 +191,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F34E}',
   },
   mandarin: {
     id: 'mandarin',
@@ -177,6 +199,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F34A}',
   },
   blueberry: {
     id: 'blueberry',
@@ -184,6 +207,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1FAD0}',
   },
   raspberry: {
     id: 'raspberry',
@@ -191,6 +215,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F352}',
   },
   'button-mushroom': {
     id: 'button-mushroom',
@@ -198,6 +223,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F344}',
   },
   'oyster-mushroom': {
     id: 'oyster-mushroom',
@@ -205,6 +231,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F344}',
   },
   'shiitake-mushroom': {
     id: 'shiitake-mushroom',
@@ -212,6 +239,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F344}',
   },
   'penny-bun-mushroom': {
     id: 'penny-bun-mushroom',
@@ -219,6 +247,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F344}',
   },
   'black-truffle': {
     id: 'black-truffle',
@@ -226,6 +255,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F344}',
   },
   herbs: {
     id: 'herbs',
@@ -233,6 +263,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'foraged',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F33F}',
   },
 
   // ─── Farmed (cost = seed cost) ──────────────────────────────────────
@@ -243,6 +274,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 10,
     dailyLimit: null,
+    emoji: '\u{1F345}',
     notes: 'Seed cost 10G',
   },
   potato: {
@@ -251,6 +283,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 30,
     dailyLimit: null,
+    emoji: '\u{1F954}',
     notes: 'Seed cost 30G',
   },
   wheat: {
@@ -259,6 +292,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 95,
     dailyLimit: null,
+    emoji: '\u{1F33E}',
     notes: 'Seed cost 95G',
   },
   lettuce: {
@@ -267,6 +301,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 145,
     dailyLimit: null,
+    emoji: '\u{1F96C}',
     notes: 'Seed cost 145G',
   },
   pineapple: {
@@ -275,6 +310,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 15,
     dailyLimit: null,
+    emoji: '\u{1F34D}',
     notes: 'Seed cost 15G',
   },
   carrot: {
@@ -283,6 +319,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 50,
     dailyLimit: null,
+    emoji: '\u{1F955}',
     notes: 'Seed cost 50G',
   },
   strawberry: {
@@ -291,6 +328,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 125,
     dailyLimit: null,
+    emoji: '\u{1F353}',
     notes: 'Seed cost 125G',
   },
   corn: {
@@ -299,6 +337,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 170,
     dailyLimit: null,
+    emoji: '\u{1F33D}',
     notes: 'Seed cost 170G',
   },
   grape: {
@@ -307,6 +346,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 160,
     dailyLimit: null,
+    emoji: '\u{1F347}',
     notes: 'Seed cost 160G',
   },
   eggplant: {
@@ -315,6 +355,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 135,
     dailyLimit: null,
+    emoji: '\u{1F346}',
     notes: 'Seed cost 135G',
   },
   'tea-tree': {
@@ -323,6 +364,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 25,
     dailyLimit: null,
+    emoji: '\u{1FAB4}',
     notes: 'Seed cost 25G',
   },
   'cocoa-bean': {
@@ -331,6 +373,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 110,
     dailyLimit: null,
+    emoji: '\u{1F36B}',
     notes: 'Cacao Tree seed cost 110G',
   },
   avocado: {
@@ -339,6 +382,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 180,
     dailyLimit: null,
+    emoji: '\u{1F951}',
     notes: 'Seed cost 180G',
   },
 
@@ -348,6 +392,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'farmed',
     cost: 10,
     dailyLimit: null,
+    emoji: '\u{1F96C}',
     notes: 'Seed cost 10G (Winter Frost event crop)',
   },
 
@@ -359,6 +404,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'fished',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F41F}',
   },
   crayfish: {
     id: 'crayfish',
@@ -366,6 +412,7 @@ export const ingredients: Record<string, Ingredient> = {
     source: 'fished',
     cost: 0,
     dailyLimit: null,
+    emoji: '\u{1F990}',
     notes: 'Shellfish / Crayfish',
   },
 

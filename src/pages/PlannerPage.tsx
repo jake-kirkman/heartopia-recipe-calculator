@@ -45,6 +45,10 @@ export function PlannerPage() {
   const [wildcardOverrides, setWildcardOverrides] = useLocalStorage<Record<string, string>>('heartopia-wildcard-overrides', {});
   const [starOdds, setStarOdds] = useLocalStorage<StarOdds>('heartopia-star-odds', DEFAULT_STAR_ODDS);
 
+  // Inventory integration
+  const [useInventory, setUseInventory] = useLocalStorage<boolean>('heartopia-use-inventory', false);
+  const [inventory] = useLocalStorage<Record<string, number>>('heartopia-inventory', {});
+
   // Close dropdown when clicking outside
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -85,29 +89,66 @@ export function PlannerPage() {
 
   // Expected revenue using star odds
   const expectedRevenue = useMemo(() => computeExpectedRevenue(items, starOdds), [items, starOdds]);
-  const expectedProfit = summary.totalCost !== null ? expectedRevenue - summary.totalCost : null;
 
-  // Separate shop ingredients for the shopping list
+  // Adjusted ingredients: subtract inventory when toggle is on
+  const adjustedIngredients = useMemo(() => {
+    if (!useInventory) return summary.ingredients;
+    return summary.ingredients.map((ing) => {
+      const inStock = Math.min(inventory[ing.ingredientId] ?? 0, ing.totalQuantity);
+      const stillNeeded = ing.totalQuantity - inStock;
+      return {
+        ...ing,
+        totalQuantity: stillNeeded,
+        totalCost: ing.unitCost !== null ? ing.unitCost * stillNeeded : null,
+        daysNeeded: ing.dailyLimit ? Math.ceil(stillNeeded / ing.dailyLimit) : null,
+      };
+    });
+  }, [summary.ingredients, useInventory, inventory]);
+
+  // Adjusted total cost
+  const adjustedTotalCost = useMemo(() => {
+    let cost: number | null = 0;
+    for (const ing of adjustedIngredients) {
+      if (ing.totalCost === null) { cost = null; break; }
+      if (cost !== null) cost += ing.totalCost;
+    }
+    return cost;
+  }, [adjustedIngredients]);
+
+  const displayCost = useInventory ? adjustedTotalCost : summary.totalCost;
+  const displayProfit = displayCost !== null && summary.totalRevenue !== null ? summary.totalRevenue - displayCost : null;
+  const expectedProfit = displayCost !== null ? expectedRevenue - displayCost : null;
+
+  // Separate shop ingredients for the shopping list (exclude zero-qty when using inventory)
   const shopIngredients = useMemo(
-    () => summary.ingredients.filter((ing) => ing.source === 'shop'),
-    [summary.ingredients],
+    () => adjustedIngredients.filter((ing) => ing.source === 'shop' && ing.totalQuantity > 0),
+    [adjustedIngredients],
   );
 
-  // Separate farmed ingredients for the farm planner
+  // Separate farmed ingredients for the farm planner (exclude zero-qty when using inventory)
   const farmedIngredients = useMemo(
-    () => summary.ingredients.filter((ing) => ing.source === 'farmed'),
-    [summary.ingredients],
+    () => adjustedIngredients.filter((ing) => ing.source === 'farmed' && ing.totalQuantity > 0),
+    [adjustedIngredients],
   );
+
+  // Shopping days from adjusted shop ingredients
+  const shoppingDays = useMemo(() => {
+    let maxDays = 0;
+    for (const ing of shopIngredients) {
+      if (ing.daysNeeded !== null && ing.daysNeeded > maxDays) maxDays = ing.daysNeeded;
+    }
+    return Math.max(1, maxDays);
+  }, [shopIngredients]);
 
   // Group all ingredients by source for the ingredient summary
   const ingredientsBySource = useMemo(() => {
     const groups: Record<string, typeof summary.ingredients> = {};
-    for (const ing of summary.ingredients) {
+    for (const ing of adjustedIngredients) {
       if (!groups[ing.source]) groups[ing.source] = [];
       groups[ing.source].push(ing);
     }
     return groups;
-  }, [summary.ingredients]);
+  }, [adjustedIngredients]);
 
   const handleSelectRecipe = (recipeId: string) => {
     addItem(recipeId);
@@ -191,16 +232,27 @@ export function PlannerPage() {
     <div className="space-y-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <h1 className="text-3xl font-bold text-bark">Batch Cooking Planner</h1>
-        <button
-          onClick={handleClearAll}
-          className={`px-4 py-2 rounded-lg text-sm font-semibold border-none cursor-pointer transition-colors ${
-            confirmClear
-              ? 'bg-coral text-white'
-              : 'bg-peach/60 text-bark hover:bg-coral/30'
-          }`}
-        >
-          {confirmClear ? 'Click again to confirm' : 'Clear All'}
-        </button>
+        <div className="flex items-center gap-4">
+          <label className="flex items-center gap-2 text-sm text-bark cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={useInventory}
+              onChange={(e) => setUseInventory(e.target.checked)}
+              className="accent-coral w-4 h-4 cursor-pointer"
+            />
+            Use Inventory
+          </label>
+          <button
+            onClick={handleClearAll}
+            className={`px-4 py-2 rounded-lg text-sm font-semibold border-none cursor-pointer transition-colors ${
+              confirmClear
+                ? 'bg-coral text-white'
+                : 'bg-peach/60 text-bark hover:bg-coral/30'
+            }`}
+          >
+            {confirmClear ? 'Click again to confirm' : 'Clear All'}
+          </button>
+        </div>
       </div>
 
       {/* Recipe Selector */}
@@ -450,6 +502,8 @@ export function PlannerPage() {
                 <th className="px-5 py-3 font-semibold">Ingredient</th>
                 <th className="px-5 py-3 font-semibold">Source</th>
                 <th className="px-5 py-3 font-semibold text-right">Qty</th>
+                {useInventory && <th className="px-5 py-3 font-semibold text-right">In Stock</th>}
+                {useInventory && <th className="px-5 py-3 font-semibold text-right">Still Need</th>}
                 <th className="px-5 py-3 font-semibold text-right">Cost/ea</th>
                 <th className="px-5 py-3 font-semibold text-right">Total</th>
               </tr>
@@ -459,10 +513,14 @@ export function PlannerPage() {
                 ings.map((ing, i) => {
                   const ingData = ingredients[ing.ingredientId];
                   const name = ingData?.name ?? ing.ingredientId;
+                  const originalIng = useInventory ? summary.ingredients.find((s) => s.ingredientId === ing.ingredientId) : null;
+                  const originalQty = originalIng?.totalQuantity ?? ing.totalQuantity;
+                  const inStock = useInventory ? Math.min(inventory[ing.ingredientId] ?? 0, originalQty) : 0;
+                  const covered = useInventory && ing.totalQuantity === 0;
                   return (
                     <tr
                       key={ing.ingredientId}
-                      className={`border-b border-peach/10 ${i === 0 ? 'border-t border-peach/20' : ''}`}
+                      className={`border-b border-peach/10 ${i === 0 ? 'border-t border-peach/20' : ''} ${covered ? 'opacity-40' : ''}`}
                     >
                       <td className="px-5 py-2.5 text-bark font-medium">{name}</td>
                       <td className="px-5 py-2.5">
@@ -470,7 +528,9 @@ export function PlannerPage() {
                           {SOURCE_LABEL[source] ?? source}
                         </Badge>
                       </td>
-                      <td className="px-5 py-2.5 text-right text-bark">{ing.totalQuantity}</td>
+                      <td className="px-5 py-2.5 text-right text-bark">{originalQty}</td>
+                      {useInventory && <td className="px-5 py-2.5 text-right text-sage font-medium">{inStock}</td>}
+                      {useInventory && <td className="px-5 py-2.5 text-right text-bark font-medium">{ing.totalQuantity}</td>}
                       <td className="px-5 py-2.5 text-right text-wood">
                         {formatGold(ing.unitCost)}
                       </td>
@@ -544,8 +604,8 @@ export function PlannerPage() {
           </div>
           <div className="px-5 py-3 border-t border-coral/20 bg-coral/5 flex items-center gap-2">
             <span className="text-sm text-wood">Total Shopping Days:</span>
-            <Badge variant={summary.shoppingDays > 1 ? 'coral' : 'sage'}>
-              {summary.shoppingDays} {summary.shoppingDays === 1 ? 'day' : 'days'}
+            <Badge variant={shoppingDays > 1 ? 'coral' : 'sage'}>
+              {shoppingDays} {shoppingDays === 1 ? 'day' : 'days'}
             </Badge>
           </div>
         </section>
@@ -559,8 +619,13 @@ export function PlannerPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Total Cost */}
           <div className="rounded-xl bg-peach/40 border border-peach/60 p-6 text-center">
-            <p className="text-sm font-semibold text-wood mb-1">Total Cost</p>
-            <p className="text-2xl font-bold text-bark">{formatGold(summary.totalCost)}</p>
+            <p className="text-sm font-semibold text-wood mb-1">
+              {useInventory ? 'Remaining Cost' : 'Total Cost'}
+            </p>
+            <p className="text-2xl font-bold text-bark">{formatGold(displayCost)}</p>
+            {useInventory && displayCost !== summary.totalCost && (
+              <p className="text-xs text-wood mt-1 line-through">{formatGold(summary.totalCost)}</p>
+            )}
           </div>
 
           {/* Total Revenue */}
@@ -573,7 +638,7 @@ export function PlannerPage() {
           {/* Total Profit */}
           <div
             className={`rounded-xl border p-6 text-center ${
-              summary.totalProfit !== null && summary.totalProfit >= 0
+              displayProfit !== null && displayProfit >= 0
                 ? 'bg-sage/40 border-sage/60'
                 : 'bg-coral/20 border-coral/40'
             }`}
@@ -581,11 +646,11 @@ export function PlannerPage() {
             <p className="text-sm font-semibold text-wood mb-1">Total Profit</p>
             <p
               className={`text-2xl font-bold ${
-                summary.totalProfit !== null && summary.totalProfit >= 0 ? 'text-bark' : 'text-coral'
+                displayProfit !== null && displayProfit >= 0 ? 'text-bark' : 'text-coral'
               }`}
             >
-              {summary.totalProfit !== null
-                ? (summary.totalProfit >= 0 ? '+' : '') + formatGold(summary.totalProfit)
+              {displayProfit !== null
+                ? (displayProfit >= 0 ? '+' : '') + formatGold(displayProfit)
                 : 'TBD'}
             </p>
             <p className="text-xs text-wood mt-1">

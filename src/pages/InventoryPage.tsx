@@ -228,6 +228,7 @@ export function InventoryPage() {
                         }`}
                       >
                         <span className="text-xs font-medium text-bark truncate" title={ing.name}>
+                          {ing.emoji && <span className="mr-1">{ing.emoji}</span>}
                           {ing.name}
                         </span>
                         <div className="flex items-center gap-1">
