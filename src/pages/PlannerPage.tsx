@@ -510,6 +510,12 @@ export function PlannerPage() {
                   </div>
                 ))}
               </div>
+              <button
+                onClick={() => setStarOdds(DEFAULT_STAR_ODDS)}
+                className="text-xs text-coral hover:text-coral/80 underline cursor-pointer bg-transparent border-none p-0"
+              >
+                Reset to defaults
+              </button>
             </div>
           </CollapsibleSection>
         </div>
