@@ -227,7 +227,7 @@ export function FarmPlanner({ farmedIngredients }: FarmPlannerProps) {
                   return (
                     <div
                       key={phase.phaseNumber}
-                      className="basis-[calc(33.333%-0.5rem)] rounded-lg border border-sage/30 p-3 bg-sage/5"
+                      className="basis-full sm:basis-[calc(33.333%-0.5rem)] rounded-lg border border-sage/30 p-3 bg-sage/5"
                     >
                       <div className="flex items-center justify-between mb-1">
                         <p className="text-xs font-semibold text-wood">

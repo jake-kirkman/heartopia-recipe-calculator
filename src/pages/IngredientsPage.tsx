@@ -34,14 +34,14 @@ function ShopTable() {
   const items = bySource('shop');
 
   return (
-    <div className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
+    <div className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-clip">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="bg-peach/30">
-            <th className="px-4 py-3 font-semibold text-bark">Ingredient</th>
-            <th className="px-4 py-3 font-semibold text-bark">Cost</th>
-            <th className="px-4 py-3 font-semibold text-bark">Daily Limit</th>
-            <th className="px-4 py-3 font-semibold text-bark">Notes</th>
+          <tr>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Ingredient</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Cost</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Daily Limit</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Notes</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-peach/20">
@@ -101,16 +101,16 @@ function ForagedGrid() {
 
 function FarmedTable() {
   return (
-    <div className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
+    <div className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-clip">
       <table className="w-full text-left text-sm">
         <thead>
-          <tr className="bg-peach/30">
-            <th className="px-4 py-3 font-semibold text-bark">Crop</th>
-            <th className="px-4 py-3 font-semibold text-bark">Gardening Lvl</th>
-            <th className="px-4 py-3 font-semibold text-bark">Seed Cost</th>
-            <th className="px-4 py-3 font-semibold text-bark">Growth Time</th>
-            <th className="px-4 py-3 font-semibold text-bark">1-Star Sell</th>
-            <th className="px-4 py-3 font-semibold text-bark">Profit</th>
+          <tr>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Crop</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Gardening Lvl</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Seed Cost</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Growth Time</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">1-Star Sell</th>
+            <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Profit</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-peach/20">
@@ -205,13 +205,13 @@ function SpecialTable() {
         <span className="font-semibold text-bark">Doris</span>, the special
         merchant. Prices and availability details are still being confirmed.
       </p>
-      <div className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
+      <div className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-clip">
         <table className="w-full text-left text-sm">
           <thead>
-            <tr className="bg-peach/30">
-              <th className="px-4 py-3 font-semibold text-bark">Ingredient</th>
-              <th className="px-4 py-3 font-semibold text-bark">Cost</th>
-              <th className="px-4 py-3 font-semibold text-bark">Notes</th>
+            <tr>
+              <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Ingredient</th>
+              <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Cost</th>
+              <th className="px-4 py-3 font-semibold text-bark sticky top-[57px] z-20 bg-cream border-b border-peach/30">Notes</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-peach/20">

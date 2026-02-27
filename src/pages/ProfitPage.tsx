@@ -235,11 +235,10 @@ export function ProfitPage() {
       </div>
 
       {/* Desktop Table */}
-      <div className="hidden md:block rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
-        <div className="overflow-x-auto">
+      <div className="hidden md:block rounded-xl bg-white shadow-sm border border-peach/30 overflow-clip">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-peach/30">
+              <tr>
                 {(
                   [
                     ['name', 'Recipe'],
@@ -253,7 +252,7 @@ export function ProfitPage() {
                   <th
                     key={field}
                     onClick={() => handleSort(field)}
-                    className={`px-4 py-3 text-left font-semibold text-bark cursor-pointer select-none hover:bg-peach/50 transition-colors ${
+                    className={`px-4 py-3 text-left font-semibold text-bark cursor-pointer select-none hover:bg-peach/50 transition-colors sticky top-[57px] z-20 bg-cream border-b border-peach/30 ${
                       field !== 'name' ? 'text-right' : ''
                     }`}
                   >
@@ -335,7 +334,6 @@ export function ProfitPage() {
               ))}
             </tbody>
           </table>
-        </div>
       </div>
 
       {/* Mobile Card View */}

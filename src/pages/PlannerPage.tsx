@@ -328,7 +328,7 @@ export function PlannerPage() {
       )}
 
       {/* Batch List */}
-      <section className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
+      <section className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-clip">
         <div className="px-5 py-3 border-b border-peach/20 bg-peach/10">
           <h2 className="text-lg font-bold text-bark">
             Batch List ({items.length} {items.length === 1 ? 'recipe' : 'recipes'})
@@ -336,15 +336,15 @@ export function PlannerPage() {
         </div>
 
         {/* Desktop table */}
-        <div className="hidden md:block overflow-x-auto">
+        <div className="hidden md:block">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-peach/20 text-left text-wood">
-                <th className="px-5 py-3 font-semibold">Recipe</th>
-                <th className="px-5 py-3 font-semibold">Qty</th>
-                <th className="px-5 py-3 font-semibold">Stars</th>
-                <th className="px-5 py-3 font-semibold text-right">Sell Total</th>
-                <th className="px-5 py-3 font-semibold w-12"></th>
+              <tr className="text-left text-wood">
+                <th className="px-5 py-3 font-semibold sticky top-[57px] z-20 bg-white border-b border-peach/20">Recipe</th>
+                <th className="px-5 py-3 font-semibold sticky top-[57px] z-20 bg-white border-b border-peach/20">Qty</th>
+                <th className="px-5 py-3 font-semibold sticky top-[57px] z-20 bg-white border-b border-peach/20">Stars</th>
+                <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-peach/20">Sell Total</th>
+                <th className="px-5 py-3 font-semibold w-12 sticky top-[57px] z-20 bg-white border-b border-peach/20"></th>
               </tr>
             </thead>
             <tbody>
@@ -491,21 +491,22 @@ export function PlannerPage() {
       </section>
 
       {/* Ingredient Summary */}
-      <section className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
+      <section className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-clip">
         <div className="px-5 py-3 border-b border-peach/20 bg-peach/10">
           <h2 className="text-lg font-bold text-bark">Ingredient Summary</h2>
         </div>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto md:overflow-x-clip">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-peach/20 text-left text-wood">
-                <th className="px-5 py-3 font-semibold">Ingredient</th>
-                <th className="px-5 py-3 font-semibold">Source</th>
-                <th className="px-5 py-3 font-semibold text-right">Qty</th>
-                {useInventory && <th className="px-5 py-3 font-semibold text-right">In Stock</th>}
-                {useInventory && <th className="px-5 py-3 font-semibold text-right">Still Need</th>}
-                <th className="px-5 py-3 font-semibold text-right">Cost/ea</th>
-                <th className="px-5 py-3 font-semibold text-right">Total</th>
+              <tr className="text-left text-wood">
+                <th className="px-5 py-3 font-semibold sticky top-[57px] z-20 bg-white border-b border-peach/20">Ingredient</th>
+                <th className="px-5 py-3 font-semibold sticky top-[57px] z-20 bg-white border-b border-peach/20">Source</th>
+                <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-peach/20">Qty</th>
+                {useInventory && <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-peach/20">In Stock</th>}
+                {useInventory && <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-peach/20">Still Need</th>}
+                {useInventory && <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-peach/20">Remaining Stock</th>}
+                <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-peach/20">Cost/ea</th>
+                <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-peach/20">Total</th>
               </tr>
             </thead>
             <tbody>
@@ -531,6 +532,14 @@ export function PlannerPage() {
                       <td className="px-5 py-2.5 text-right text-bark">{originalQty}</td>
                       {useInventory && <td className="px-5 py-2.5 text-right text-sage font-medium">{inStock}</td>}
                       {useInventory && <td className="px-5 py-2.5 text-right text-bark font-medium">{ing.totalQuantity}</td>}
+                      {useInventory && (() => {
+                        const remaining = (inventory[ing.ingredientId] ?? 0) - originalQty;
+                        return (
+                          <td className={`px-5 py-2.5 text-right font-medium ${remaining >= 0 ? 'text-sage' : 'text-coral'}`}>
+                            {remaining}
+                          </td>
+                        );
+                      })()}
                       <td className="px-5 py-2.5 text-right text-wood">
                         {formatGold(ing.unitCost)}
                       </td>
@@ -548,22 +557,22 @@ export function PlannerPage() {
 
       {/* Shopping List */}
       {shopIngredients.length > 0 && (
-        <section className="rounded-xl bg-white shadow-sm border-2 border-coral/40 overflow-hidden">
+        <section className="rounded-xl bg-white shadow-sm border-2 border-coral/40 overflow-clip">
           <div className="px-5 py-3 border-b border-coral/20 bg-coral/10">
             <h2 className="text-lg font-bold text-bark">
               Shopping List (Massimo's Store)
             </h2>
           </div>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto md:overflow-x-clip">
             <table className="w-full text-sm">
               <thead>
-                <tr className="border-b border-coral/20 text-left text-wood">
-                  <th className="px-5 py-3 font-semibold">Ingredient</th>
-                  <th className="px-5 py-3 font-semibold text-right">Qty</th>
-                  <th className="px-5 py-3 font-semibold text-right">Cost/ea</th>
-                  <th className="px-5 py-3 font-semibold text-right">Total</th>
-                  <th className="px-5 py-3 font-semibold text-right">Daily Limit</th>
-                  <th className="px-5 py-3 font-semibold text-right">Days Needed</th>
+                <tr className="text-left text-wood">
+                  <th className="px-5 py-3 font-semibold sticky top-[57px] z-20 bg-white border-b border-coral/20">Ingredient</th>
+                  <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-coral/20">Qty</th>
+                  <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-coral/20">Cost/ea</th>
+                  <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-coral/20">Total</th>
+                  <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-coral/20">Daily Limit</th>
+                  <th className="px-5 py-3 font-semibold text-right sticky top-[57px] z-20 bg-white border-b border-coral/20">Days Needed</th>
                 </tr>
               </thead>
               <tbody>
