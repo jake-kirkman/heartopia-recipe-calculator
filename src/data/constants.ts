@@ -1,4 +1,4 @@
-import type { StarRating } from './types';
+import type { StarRating, StarOdds } from './types';
 
 export const STAR_MULTIPLIERS: Record<StarRating, number> = {
   1: 1,
@@ -46,3 +46,5 @@ export const GARDEN_LEVEL_PRESETS: GardenLevelPreset[] = [
 ];
 
 export const DEFAULT_GARDEN_PLOTS = 9;
+
+export const DEFAULT_STAR_ODDS: StarOdds = { 1: 80, 2: 10, 3: 5, 4: 3, 5: 2 };

@@ -6,6 +6,7 @@ const navLinks = [
   { to: '/recipes', label: 'Recipes' },
   { to: '/profit', label: 'Profit Calc' },
   { to: '/ingredients', label: 'Ingredients' },
+  { to: '/inventory', label: 'Inventory' },
   { to: '/planner', label: 'Planner' },
 ];
 

@@ -1,15 +1,19 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { recipes } from '../data/recipes';
 import { ingredients } from '../data/ingredients';
-import type { StarRating as StarRatingType } from '../data/types';
-import { getSellPrice, computeBatchSummary } from '../utils/calculations';
+import type { Recipe, StarRating as StarRatingType, StarOdds } from '../data/types';
+import { DEFAULT_STAR_ODDS } from '../data/constants';
+import { getSellPrice, computeBatchSummary, findWildcardsInRecipe, getIngredientCost, resolveWildcardDefault, computeExpectedRevenue } from '../utils/calculations';
 import { formatGold } from '../utils/formatters';
 import { StarRating } from '../components/StarRating';
 import { NumberInput } from '../components/NumberInput';
 import { Badge } from '../components/Badge';
+import { CollapsibleSection } from '../components/CollapsibleSection';
+import { RecipeModal } from '../components/RecipeModal';
 import { useBatchPlanner } from '../context/BatchPlannerContext';
 import { FarmPlanner } from '../components/FarmPlanner';
 import { Link } from 'react-router-dom';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 const SOURCE_BADGE_VARIANT: Record<string, 'coral' | 'sage' | 'sky' | 'mint' | 'peach' | 'wood' | 'gray'> = {
   shop: 'coral',
@@ -34,7 +38,12 @@ export function PlannerPage() {
   const [search, setSearch] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+
+  // Wildcard overrides & star odds (persisted)
+  const [wildcardOverrides, setWildcardOverrides] = useLocalStorage<Record<string, string>>('heartopia-wildcard-overrides', {});
+  const [starOdds, setStarOdds] = useLocalStorage<StarOdds>('heartopia-star-odds', DEFAULT_STAR_ODDS);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -56,8 +65,27 @@ export function PlannerPage() {
       .slice(0, 8);
   }, [search]);
 
-  // Compute the batch summary
-  const summary = useMemo(() => computeBatchSummary(items), [items]);
+  // Find all active wildcards across batch items
+  const activeWildcards = useMemo(() => {
+    const allIds = new Set<string>();
+    for (const item of items) {
+      for (const wId of findWildcardsInRecipe(item.recipeId)) {
+        allIds.add(wId);
+      }
+    }
+    // Filter to those with multiple options
+    return Array.from(allIds).filter((id) => {
+      const ing = ingredients[id];
+      return ing?.wildcardOptions && ing.wildcardOptions.length > 1;
+    });
+  }, [items]);
+
+  // Compute the batch summary (with wildcard overrides)
+  const summary = useMemo(() => computeBatchSummary(items, wildcardOverrides), [items, wildcardOverrides]);
+
+  // Expected revenue using star odds
+  const expectedRevenue = useMemo(() => computeExpectedRevenue(items, starOdds), [items, starOdds]);
+  const expectedProfit = summary.totalCost !== null ? expectedRevenue - summary.totalCost : null;
 
   // Separate shop ingredients for the shopping list
   const shopIngredients = useMemo(
@@ -206,6 +234,47 @@ export function PlannerPage() {
         )}
       </div>
 
+      {/* Wildcard Ingredient Overrides */}
+      {activeWildcards.length > 0 && (
+        <section className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
+          <div className="px-5 py-3 border-b border-peach/20 bg-peach/10">
+            <h2 className="text-lg font-bold text-bark">Wildcard Ingredients</h2>
+          </div>
+          <div className="p-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {activeWildcards.map((wildcardId) => {
+              const wIng = ingredients[wildcardId];
+              if (!wIng?.wildcardOptions) return null;
+              const defaultOption = resolveWildcardDefault(wildcardId);
+              const currentValue = wildcardOverrides[wildcardId] || defaultOption || '';
+
+              return (
+                <div key={wildcardId}>
+                  <label className="block text-xs font-semibold text-wood mb-1">{wIng.name}</label>
+                  <select
+                    value={currentValue}
+                    onChange={(e) => {
+                      setWildcardOverrides((prev) => ({ ...prev, [wildcardId]: e.target.value }));
+                    }}
+                    className="w-full rounded-lg border border-peach/50 bg-white px-3 py-1.5 text-sm text-bark focus:outline-none focus:ring-2 focus:ring-coral/40"
+                  >
+                    {wIng.wildcardOptions.map((optionId) => {
+                      const optIng = ingredients[optionId];
+                      const optName = optIng?.name ?? optionId;
+                      const optCost = getIngredientCost(optionId);
+                      return (
+                        <option key={optionId} value={optionId}>
+                          {optName} ({optCost !== null ? `${optCost}G` : 'TBD'})
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
       {/* Batch List */}
       <section className="rounded-xl bg-white shadow-sm border border-peach/30 overflow-hidden">
         <div className="px-5 py-3 border-b border-peach/20 bg-peach/10">
@@ -238,7 +307,14 @@ export function PlannerPage() {
                     key={`${item.recipeId}-${index}`}
                     className="border-b border-peach/10 hover:bg-peach/5 transition-colors"
                   >
-                    <td className="px-5 py-3 font-medium text-bark">{recipe.name}</td>
+                    <td className="px-5 py-3 font-medium text-bark">
+                      <button
+                        onClick={() => setSelectedRecipe(recipe)}
+                        className="bg-transparent border-none p-0 font-medium text-bark hover:text-coral cursor-pointer transition-colors underline decoration-peach/40 hover:decoration-coral/60"
+                      >
+                        {recipe.name}
+                      </button>
+                    </td>
                     <td className="px-5 py-3">
                       <NumberInput
                         value={item.quantity}
@@ -287,7 +363,12 @@ export function PlannerPage() {
                 className="p-4 space-y-3"
               >
                 <div className="flex items-start justify-between">
-                  <span className="font-medium text-bark">{recipe.name}</span>
+                  <button
+                    onClick={() => setSelectedRecipe(recipe)}
+                    className="bg-transparent border-none p-0 font-medium text-bark hover:text-coral cursor-pointer transition-colors underline decoration-peach/40 hover:decoration-coral/60 text-left"
+                  >
+                    {recipe.name}
+                  </button>
                   <button
                     onClick={() => removeItem(index)}
                     className="w-7 h-7 rounded-md bg-coral/20 hover:bg-coral/40 text-coral font-bold text-sm border-none cursor-pointer transition-colors flex-shrink-0"
@@ -318,6 +399,42 @@ export function PlannerPage() {
               </div>
             );
           })}
+        </div>
+
+        {/* Star Odds */}
+        <div className="px-5 py-3 border-t border-peach/20">
+          <CollapsibleSection title="Star Odds (Expected Value)">
+            <div className="space-y-3">
+              <p className="text-xs text-wood/70 italic">
+                Star probabilities are speculative estimates. Actual rates depend on cooking level,
+                seasoning, rainbow mechanics, and other in-game factors that have not been
+                scientifically confirmed.
+              </p>
+              <div className="grid grid-cols-5 gap-3">
+                {([1, 2, 3, 4, 5] as StarRatingType[]).map((star) => (
+                  <div key={star} className="text-center">
+                    <label className="block text-xs font-semibold text-wood mb-1">
+                      {star}★
+                    </label>
+                    <div className="flex items-center justify-center gap-1">
+                      <input
+                        type="number"
+                        min={0}
+                        max={100}
+                        value={starOdds[star]}
+                        onChange={(e) => {
+                          const val = Math.max(0, Math.min(100, Number(e.target.value) || 0));
+                          setStarOdds((prev) => ({ ...prev, [star]: val }));
+                        }}
+                        className="w-14 rounded-lg border border-peach/50 bg-white px-2 py-1 text-sm text-bark text-center focus:outline-none focus:ring-2 focus:ring-coral/40"
+                      />
+                      <span className="text-xs text-wood">%</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CollapsibleSection>
         </div>
       </section>
 
@@ -438,39 +555,63 @@ export function PlannerPage() {
       {farmedIngredients.length > 0 && <FarmPlanner farmedIngredients={farmedIngredients} />}
 
       {/* Profit Summary */}
-      <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {/* Total Cost */}
-        <div className="rounded-xl bg-peach/40 border border-peach/60 p-6 text-center">
-          <p className="text-sm font-semibold text-wood mb-1">Total Cost</p>
-          <p className="text-2xl font-bold text-bark">{formatGold(summary.totalCost)}</p>
-        </div>
+      <section className="space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Total Cost */}
+          <div className="rounded-xl bg-peach/40 border border-peach/60 p-6 text-center">
+            <p className="text-sm font-semibold text-wood mb-1">Total Cost</p>
+            <p className="text-2xl font-bold text-bark">{formatGold(summary.totalCost)}</p>
+          </div>
 
-        {/* Total Revenue */}
-        <div className="rounded-xl bg-mint/40 border border-mint/60 p-6 text-center">
-          <p className="text-sm font-semibold text-wood mb-1">Total Revenue</p>
-          <p className="text-2xl font-bold text-bark">{formatGold(summary.totalRevenue)}</p>
-        </div>
+          {/* Total Revenue */}
+          <div className="rounded-xl bg-mint/40 border border-mint/60 p-6 text-center">
+            <p className="text-sm font-semibold text-wood mb-1">Total Revenue</p>
+            <p className="text-2xl font-bold text-bark">{formatGold(summary.totalRevenue)}</p>
+            <p className="text-xs text-wood mt-1">Expected: {formatGold(expectedRevenue)}</p>
+          </div>
 
-        {/* Total Profit */}
-        <div
-          className={`rounded-xl border p-6 text-center ${
-            summary.totalProfit !== null && summary.totalProfit >= 0
-              ? 'bg-sage/40 border-sage/60'
-              : 'bg-coral/20 border-coral/40'
-          }`}
-        >
-          <p className="text-sm font-semibold text-wood mb-1">Total Profit</p>
-          <p
-            className={`text-2xl font-bold ${
-              summary.totalProfit !== null && summary.totalProfit >= 0 ? 'text-bark' : 'text-coral'
+          {/* Total Profit */}
+          <div
+            className={`rounded-xl border p-6 text-center ${
+              summary.totalProfit !== null && summary.totalProfit >= 0
+                ? 'bg-sage/40 border-sage/60'
+                : 'bg-coral/20 border-coral/40'
             }`}
           >
-            {summary.totalProfit !== null
-              ? (summary.totalProfit >= 0 ? '+' : '') + formatGold(summary.totalProfit)
-              : 'TBD'}
-          </p>
+            <p className="text-sm font-semibold text-wood mb-1">Total Profit</p>
+            <p
+              className={`text-2xl font-bold ${
+                summary.totalProfit !== null && summary.totalProfit >= 0 ? 'text-bark' : 'text-coral'
+              }`}
+            >
+              {summary.totalProfit !== null
+                ? (summary.totalProfit >= 0 ? '+' : '') + formatGold(summary.totalProfit)
+                : 'TBD'}
+            </p>
+            <p className="text-xs text-wood mt-1">
+              Expected: {expectedProfit !== null
+                ? (expectedProfit >= 0 ? '+' : '') + formatGold(expectedProfit)
+                : 'TBD'}
+            </p>
+          </div>
         </div>
+        <p className="text-xs text-wood/60 text-center">
+          Main values assume every dish is the star rating you selected. Expected values are the weighted average across all star levels using your star odds.
+        </p>
       </section>
+
+      {/* Recipe Detail Modal */}
+      {selectedRecipe && (
+        <RecipeModal
+          recipe={selectedRecipe}
+          star={selectedRecipe ? (items.find((i) => i.recipeId === selectedRecipe.id)?.starRating ?? 1) : 1}
+          onClose={() => setSelectedRecipe(null)}
+          onAdd={() => {
+            addItem(selectedRecipe.id);
+            setSelectedRecipe(null);
+          }}
+        />
+      )}
     </div>
   );
 }

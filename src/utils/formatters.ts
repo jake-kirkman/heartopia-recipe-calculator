@@ -53,6 +53,7 @@ export function categoryLabel(cat: string): string {
     burger: 'Burger',
     other: 'Other',
     failure: 'Failure',
+    'frostspore-event': 'Frostspore Event',
   };
   return labels[cat] || cat;
 }

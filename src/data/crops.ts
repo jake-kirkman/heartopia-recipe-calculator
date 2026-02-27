@@ -15,6 +15,7 @@ export const INGREDIENT_TO_CROP_ID: Record<string, string> = {
   'tea-tree': 'tea-tree',
   'cocoa-bean': 'cacao-tree',
   avocado: 'avocado',
+  'white-radish': 'white-radish',
 };
 
 export const crops: CropData[] = [
@@ -134,6 +135,15 @@ export const crops: CropData[] = [
     growthTime: 'TBD',
     growthMinutes: 0,
     sellPrice: 540,
+  },
+  {
+    id: 'white-radish',
+    name: 'White Radish',
+    gardeningLevel: 1,
+    seedCost: 10,
+    growthTime: '15 min',
+    growthMinutes: 15,
+    sellPrice: 30,
   },
 ];
 

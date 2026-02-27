@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { recipes } from '../data/recipes';
 import type { StarRating as StarRatingType, Recipe } from '../data/types';
-import { getSellPrice, getProfit, getMargin } from '../utils/calculations';
+import { getSellPrice, getProfit, getMargin, computeCostToMake } from '../utils/calculations';
 import { formatGold, formatPercent, categoryLabel } from '../utils/formatters';
 import { StarRating } from '../components/StarRating';
 import { Badge, TbdBadge } from '../components/Badge';
@@ -97,8 +97,8 @@ export function ProfitPage() {
           bVal = b.recipe.level;
           break;
         case 'cost':
-          aVal = a.recipe.costToMake;
-          bVal = b.recipe.costToMake;
+          aVal = computeCostToMake(a.recipe);
+          bVal = computeCostToMake(b.recipe);
           break;
         case 'sell':
           aVal = a.sell;
@@ -302,11 +302,11 @@ export function ProfitPage() {
 
                   {/* Cost */}
                   <td className="px-4 py-3 text-right tabular-nums">
-                    {item.recipe.costToMake === null ? (
+                    {computeCostToMake(item.recipe) === null ? (
                       <TbdBadge />
                     ) : (
                       <span className="text-bark">
-                        {formatGold(item.recipe.costToMake)}
+                        {formatGold(computeCostToMake(item.recipe))}
                       </span>
                     )}
                   </td>
@@ -375,10 +375,10 @@ export function ProfitPage() {
               <div className="flex justify-between">
                 <span className="text-wood">Cost</span>
                 <span className="text-bark tabular-nums">
-                  {item.recipe.costToMake === null ? (
+                  {computeCostToMake(item.recipe) === null ? (
                     <TbdBadge />
                   ) : (
-                    formatGold(item.recipe.costToMake)
+                    formatGold(computeCostToMake(item.recipe))
                   )}
                 </span>
               </div>

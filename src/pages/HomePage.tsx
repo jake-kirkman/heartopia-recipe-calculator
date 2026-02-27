@@ -20,6 +20,12 @@ const features = [
     icon: '🥕',
   },
   {
+    to: '/inventory',
+    title: 'Inventory Checker',
+    description: 'Enter your ingredients and see which recipes you can craft',
+    icon: '📦',
+  },
+  {
     to: '/planner',
     title: 'Batch Planner',
     description: 'Plan cooking sessions and calculate shopping lists',

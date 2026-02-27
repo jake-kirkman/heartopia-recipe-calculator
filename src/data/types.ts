@@ -16,9 +16,10 @@ export type RecipeCategory =
   | 'composite'
   | 'burger'
   | 'other'
-  | 'failure';
+  | 'failure'
+  | 'frostspore-event';
 
-export type UnlockMethod = 'starting' | 'massimo' | 'quest' | 'doris' | 'variant';
+export type UnlockMethod = 'starting' | 'massimo' | 'quest' | 'doris' | 'variant' | 'event';
 
 export interface Ingredient {
   id: string;
@@ -42,7 +43,6 @@ export interface Recipe {
   level: number;
   category: RecipeCategory;
   ingredients: RecipeIngredient[];
-  costToMake: number | null;
   basePrice: number | null;
   energy: number | null;
   buff?: string;
@@ -67,6 +67,8 @@ export interface CropData {
 }
 
 export type StarRating = 1 | 2 | 3 | 4 | 5;
+
+export type StarOdds = Record<StarRating, number>;
 
 export interface BatchItem {
   recipeId: string;
