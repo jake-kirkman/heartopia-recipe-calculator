@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import type { AggregatedIngredient, FarmStrategy } from '../data/types';
+import { useState, useMemo, useRef } from 'react';
+import type { AggregatedIngredient } from '../data/types';
 import { GARDEN_LEVEL_PRESETS, DEFAULT_GARDEN_PLOTS } from '../data/constants';
 import { computeFarmSchedule } from '../utils/farmCalculations';
 import { formatGold, formatFarmingTime } from '../utils/formatters';
@@ -25,11 +25,17 @@ const CROP_COLORS: Record<string, { bg: string; border: string; text: string; la
 
 const DEFAULT_CROP_COLOR = { bg: 'bg-gray-400', border: 'border-gray-500', text: 'text-gray-700', label: '?' };
 
-const STRATEGY_OPTIONS: { value: FarmStrategy; label: string; desc: string }[] = [
-  { value: 'fastest-first', label: 'Fastest First', desc: 'Greedy parallel scheduling' },
-  { value: 'equal-split', label: 'Equal Split', desc: 'Plots divided evenly' },
-  { value: 'sequential', label: 'Sequential', desc: 'One crop at a time, all plots' },
-];
+/** Format a time offset as "HH:mm" with a "+N day" prefix when it rolls past midnight */
+function formatPhaseTime(startTimeStr: string, offsetMinutes: number): string {
+  const [h, m] = startTimeStr.split(':').map(Number);
+  const totalMinutes = h * 60 + m + offsetMinutes;
+  const days = Math.floor(totalMinutes / 1440);
+  const remaining = ((totalMinutes % 1440) + 1440) % 1440; // handle negatives safely
+  const hh = String(Math.floor(remaining / 60)).padStart(2, '0');
+  const mm = String(remaining % 60).padStart(2, '0');
+  const dayPrefix = days > 0 ? `+${days} day${days > 1 ? 's' : ''} ` : '';
+  return `${dayPrefix}${hh}:${mm}`;
+}
 
 interface FarmPlannerProps {
   farmedIngredients: AggregatedIngredient[];
@@ -38,12 +44,13 @@ interface FarmPlannerProps {
 export function FarmPlanner({ farmedIngredients }: FarmPlannerProps) {
   const [gardenLevel, setGardenLevel] = useLocalStorage<number>('farm-garden-level', 1);
   const [plotCount, setPlotCount] = useLocalStorage<number>('farm-plot-count', DEFAULT_GARDEN_PLOTS);
-  const [strategy, setStrategy] = useLocalStorage<FarmStrategy>('farm-strategy', 'fastest-first');
   const [gridExpanded, setGridExpanded] = useState(false);
+  const [startTimeOfDay, setStartTimeOfDay] = useState<string>('');
+  const timeRef = useRef<HTMLInputElement>(null);
 
   const schedule = useMemo(
-    () => computeFarmSchedule(farmedIngredients, plotCount, strategy),
-    [farmedIngredients, plotCount, strategy],
+    () => computeFarmSchedule(farmedIngredients, plotCount),
+    [farmedIngredients, plotCount],
   );
 
   const handleGardenLevelChange = (level: number) => {
@@ -98,26 +105,6 @@ export function FarmPlanner({ farmedIngredients }: FarmPlannerProps) {
             <NumberInput value={plotCount} onChange={setPlotCount} min={1} max={40} />
           </div>
 
-          {/* Strategy */}
-          <div>
-            <label className="block text-xs font-semibold text-wood mb-1">Strategy</label>
-            <div className="flex gap-1">
-              {STRATEGY_OPTIONS.map((opt) => (
-                <button
-                  key={opt.value}
-                  onClick={() => setStrategy(opt.value)}
-                  title={opt.desc}
-                  className={`px-3 py-1.5 text-xs font-semibold rounded-lg border-none cursor-pointer transition-colors ${
-                    strategy === opt.value
-                      ? 'bg-sage text-white'
-                      : 'bg-sage/20 text-bark hover:bg-sage/40'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* TBD Warning */}
@@ -210,6 +197,38 @@ export function FarmPlanner({ farmedIngredients }: FarmPlannerProps) {
 
             {gridExpanded && (
               <div className="mt-3 space-y-3">
+                {/* Start Time input */}
+                <div className="rounded-lg bg-cream/60 border border-sage/20 px-4 py-3 flex items-center gap-3 flex-wrap">
+                  <span className="text-xs font-semibold text-wood whitespace-nowrap">Start Time</span>
+
+                  <div
+                    onClick={() => timeRef.current?.showPicker?.()}
+                    className="relative flex items-center gap-2 rounded-lg border border-sage/50 bg-white pl-2.5 pr-1 py-1.5 cursor-pointer hover:border-sage transition-colors focus-within:ring-2 focus-within:ring-sage/40"
+                  >
+                    <svg className="w-4 h-4 text-wood/50 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                    <input
+                      ref={timeRef}
+                      type="time"
+                      value={startTimeOfDay}
+                      onChange={(e) => setStartTimeOfDay(e.target.value)}
+                      className="text-sm text-bark bg-transparent border-none outline-none cursor-pointer w-[5rem] [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:inset-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                    />
+                  </div>
+
+                  {startTimeOfDay ? (
+                    <button
+                      onClick={() => setStartTimeOfDay('')}
+                      className="px-2.5 py-1.5 text-xs font-semibold rounded-lg border-none cursor-pointer bg-coral/20 text-coral hover:bg-coral/30 transition-colors"
+                    >
+                      Clear
+                    </button>
+                  ) : (
+                    <span className="text-xs text-wood/60 italic">Set a start time to see clock times on each phase</span>
+                  )}
+                </div>
+
                 <div className="flex flex-wrap gap-3">
                   {schedule.phases.map((phase) => {
                     const usedPlots = Object.values(phase.plotAssignments).reduce((s, n) => s + n, 0);
@@ -219,12 +238,20 @@ export function FarmPlanner({ farmedIngredients }: FarmPlannerProps) {
                         key={phase.phaseNumber}
                         className="basis-[calc(33.333%-0.5rem)] rounded-lg border border-sage/30 p-3 bg-sage/5"
                       >
-                        <p className="text-xs font-semibold text-wood mb-2">
-                          Phase {phase.phaseNumber}
-                        </p>
-                        <p className="text-[10px] text-wood/70 mb-2">
-                          {formatFarmingTime(phase.startMinute)} &ndash; {formatFarmingTime(phase.endMinute)}
-                        </p>
+                        <div className="flex items-center justify-between mb-1">
+                          <p className="text-xs font-semibold text-wood">
+                            Phase {phase.phaseNumber}
+                          </p>
+                          <span className="text-[10px] text-wood/60">
+                            {formatFarmingTime(phase.startMinute)} &ndash; {formatFarmingTime(phase.endMinute)}
+                          </span>
+                        </div>
+                        {startTimeOfDay && (
+                          <div className="mb-2 px-2 py-1 rounded-md bg-sky/15 text-xs font-semibold text-bark/80 text-center">
+                            {formatPhaseTime(startTimeOfDay, phase.startMinute)}
+                          </div>
+                        )}
+                        {!startTimeOfDay && <div className="mb-2" />}
                         <div className="flex flex-wrap justify-center gap-1">
                           {Object.entries(phase.plotAssignments).flatMap(([cropId, count]) => {
                             const color = CROP_COLORS[cropId] ?? DEFAULT_CROP_COLOR;

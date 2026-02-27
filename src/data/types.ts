@@ -103,8 +103,6 @@ export interface BatchSummary {
 
 // ─── Farm Planner Types ─────────────────────────────────────────────
 
-export type FarmStrategy = 'sequential' | 'equal-split' | 'fastest-first';
-
 export interface FarmCropRequirement {
   ingredientId: string;
   cropId: string;
@@ -132,7 +130,6 @@ export interface FarmSchedulePhase {
 }
 
 export interface FarmScheduleResult {
-  strategy: FarmStrategy;
   totalPlots: number;
   allocations: FarmCropAllocation[];
   totalFarmingMinutes: number;
