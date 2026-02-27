@@ -50,7 +50,7 @@ const INVENTORY_SORT_OPTIONS = [
    ================================================================ */
 
 export function InventoryPage() {
-  const { addItem } = useBatchPlanner();
+  const { items, addItem, decrementItem } = useBatchPlanner();
 
   /* ── Persisted inventory ──────────────────────────────────────── */
   const [inventory, setInventory] = useLocalStorage<Record<string, number>>('heartopia-inventory', {});
@@ -308,13 +308,16 @@ export function InventoryPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filtered.map((recipe) => {
               const count = craftableCounts[recipe.id] ?? 0;
+              const plannerItem = items.find(i => i.recipeId === recipe.id && i.starRating === star);
               return (
                 <RecipeCard
                   key={recipe.id}
                   recipe={recipe}
                   star={star}
                   onOpen={() => setSelectedRecipe(recipe)}
-                  onAdd={() => handleAdd(recipe.id)}
+                  onIncrement={() => handleAdd(recipe.id)}
+                  onDecrement={() => decrementItem(recipe.id, star)}
+                  plannerQuantity={plannerItem?.quantity ?? 0}
                   extraInfo={
                     count > 0 ? (
                       <Badge variant="sage">Can make: {count}</Badge>
@@ -335,10 +338,9 @@ export function InventoryPage() {
           recipe={selectedRecipe}
           star={star}
           onClose={() => setSelectedRecipe(null)}
-          onAdd={() => {
-            handleAdd(selectedRecipe.id);
-            setSelectedRecipe(null);
-          }}
+          onIncrement={() => handleAdd(selectedRecipe.id)}
+          onDecrement={() => decrementItem(selectedRecipe.id, star)}
+          plannerQuantity={items.find(i => i.recipeId === selectedRecipe.id && i.starRating === star)?.quantity ?? 0}
         />
       )}
     </div>

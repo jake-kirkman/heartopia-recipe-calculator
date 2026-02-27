@@ -8,7 +8,7 @@ import { useRecipeFilters } from '../hooks/useRecipeFilters';
 import { useBatchPlanner } from '../context/BatchPlannerContext';
 
 export function RecipesPage() {
-  const { addItem } = useBatchPlanner();
+  const { items, addItem, decrementItem } = useBatchPlanner();
   const [star, setStar] = useState<StarRatingType>(1);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
@@ -65,15 +65,20 @@ export function RecipesPage() {
         <div className="text-center py-12 text-wood">No recipes match your filters.</div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {filtered.map((recipe) => (
-            <RecipeCard
-              key={recipe.id}
-              recipe={recipe}
-              star={star}
-              onOpen={() => setSelectedRecipe(recipe)}
-              onAdd={() => handleAdd(recipe.id)}
-            />
-          ))}
+          {filtered.map((recipe) => {
+            const plannerItem = items.find(i => i.recipeId === recipe.id && i.starRating === star);
+            return (
+              <RecipeCard
+                key={recipe.id}
+                recipe={recipe}
+                star={star}
+                onOpen={() => setSelectedRecipe(recipe)}
+                onIncrement={() => handleAdd(recipe.id)}
+                onDecrement={() => decrementItem(recipe.id, star)}
+                plannerQuantity={plannerItem?.quantity ?? 0}
+              />
+            );
+          })}
         </div>
       )}
 
@@ -83,10 +88,9 @@ export function RecipesPage() {
           recipe={selectedRecipe}
           star={star}
           onClose={() => setSelectedRecipe(null)}
-          onAdd={() => {
-            handleAdd(selectedRecipe.id);
-            setSelectedRecipe(null);
-          }}
+          onIncrement={() => handleAdd(selectedRecipe.id)}
+          onDecrement={() => decrementItem(selectedRecipe.id, star)}
+          plannerQuantity={items.find(i => i.recipeId === selectedRecipe.id && i.starRating === star)?.quantity ?? 0}
         />
       )}
     </div>

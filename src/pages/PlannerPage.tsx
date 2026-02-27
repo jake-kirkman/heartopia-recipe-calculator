@@ -34,7 +34,7 @@ const SOURCE_LABEL: Record<string, string> = {
 };
 
 export function PlannerPage() {
-  const { items, addItem, removeItem, updateItem, clearItems } = useBatchPlanner();
+  const { items, addItem, decrementItem, removeItem, updateItem, clearItems } = useBatchPlanner();
   const [search, setSearch] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
@@ -720,17 +720,19 @@ export function PlannerPage() {
       )}
 
       {/* Recipe Detail Modal */}
-      {selectedRecipe && (
-        <RecipeModal
-          recipe={selectedRecipe}
-          star={selectedRecipe ? (items.find((i) => i.recipeId === selectedRecipe.id)?.starRating ?? 1) : 1}
-          onClose={() => setSelectedRecipe(null)}
-          onAdd={() => {
-            addItem(selectedRecipe.id);
-            setSelectedRecipe(null);
-          }}
-        />
-      )}
+      {selectedRecipe && (() => {
+        const plannerStar = items.find((i) => i.recipeId === selectedRecipe.id)?.starRating ?? 1;
+        return (
+          <RecipeModal
+            recipe={selectedRecipe}
+            star={plannerStar}
+            onClose={() => setSelectedRecipe(null)}
+            onIncrement={() => addItem(selectedRecipe.id, 1, plannerStar)}
+            onDecrement={() => decrementItem(selectedRecipe.id, plannerStar)}
+            plannerQuantity={items.find(i => i.recipeId === selectedRecipe.id && i.starRating === plannerStar)?.quantity ?? 0}
+          />
+        );
+      })()}
     </div>
   );
 }

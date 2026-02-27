@@ -80,12 +80,16 @@ export function RecipeModal({
   recipe,
   star,
   onClose,
-  onAdd,
+  onIncrement,
+  onDecrement,
+  plannerQuantity,
 }: {
   recipe: Recipe;
   star: StarRatingType;
   onClose: () => void;
-  onAdd: () => void;
+  onIncrement: () => void;
+  onDecrement: () => void;
+  plannerQuantity: number;
 }) {
   return (
     <div
@@ -216,13 +220,31 @@ export function RecipeModal({
           )}
         </div>
 
-        {/* Add to Planner */}
-        <button
-          onClick={onAdd}
-          className="w-full py-2.5 rounded-lg bg-sage text-white font-semibold hover:bg-sage/80 transition-colors"
-        >
-          Add to Planner
-        </button>
+        {/* Planner quantity selector */}
+        {plannerQuantity === 0 ? (
+          <button
+            onClick={onIncrement}
+            className="w-full py-2.5 rounded-lg bg-sage text-white font-semibold hover:bg-sage/80 transition-colors"
+          >
+            Add to Planner
+          </button>
+        ) : (
+          <div className="flex items-center justify-center gap-3">
+            <button
+              onClick={onDecrement}
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-peach/30 text-bark hover:bg-peach/60 transition-colors text-lg leading-none font-bold"
+            >
+              &minus;
+            </button>
+            <span className="text-lg font-semibold text-bark min-w-[2rem] text-center">{plannerQuantity} in planner</span>
+            <button
+              onClick={onIncrement}
+              className="w-9 h-9 flex items-center justify-center rounded-full bg-sage/20 text-bark hover:bg-sage/40 transition-colors text-lg leading-none font-bold"
+            >
+              +
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
