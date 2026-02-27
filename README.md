@@ -1,73 +1,51 @@
-# React + TypeScript + Vite
+# Heartopia Recipe Calculator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> **Disclaimer:** This project was vibe coded almost entirely using [Claude Code](https://claude.com/claude-code). The code, architecture, and styling decisions were generated through AI-assisted development and are **not representative** of what I would typically write by hand. It was a fun experiment in seeing how far you can push AI-driven development for a small community tool.
 
-Currently, two official plugins are available:
+**This project is fully open source.** You are welcome to fork, modify, update, or contribute in any way you like. If you spot incorrect game data, want to add missing recipes, or have ideas for new features, feel free to open an issue or submit a pull request.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What is this?
 
-## React Compiler
+A fan-made recipe calculator and batch cooking planner for Heartopia. It helps players:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Browse recipes** with search, filters, and detailed ingredient breakdowns
+- **Compare profit** across all recipes and star ratings with a sortable table
+- **Plan batch cooking sessions** with aggregated ingredient lists, shopping lists, and farming schedules
+- **Track inventory** to see what you already have and what you still need
+- **View ingredient sources** (shop, foraged, farmed, fished, special)
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 19 + TypeScript + Vite 7
+- Tailwind CSS 3.4
+- react-router-dom (HashRouter for GitHub Pages)
+- No backend -- all game data is hardcoded in TypeScript
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+```bash
+# Install dependencies
+npm install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Run dev server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Deployment
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+The app is deployed to GitHub Pages via GitHub Actions. Pushes to `main` trigger an automatic build and deploy.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Contributing
+
+Contributions are welcome! Some areas where help would be appreciated:
+
+- **Game data** -- recipes, ingredients, and prices are crowd-sourced and may be incomplete or incorrect (especially levels 10-13)
+- **Features** -- any quality-of-life improvements for Heartopia players
+- **Bug fixes** -- if something looks off, please open an issue
+
+## License
+
+This is an open source fan project. Not affiliated with or endorsed by the Heartopia developers.
