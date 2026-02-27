@@ -22,6 +22,7 @@ const CROP_COLORS: Record<string, { bg: string; border: string; text: string; la
   'tea-tree': { bg: 'bg-emerald-400', border: 'border-emerald-500', text: 'text-emerald-700', label: 'Tea Tree' },
   'cacao-tree': { bg: 'bg-amber-700', border: 'border-amber-800', text: 'text-amber-900', label: 'Cacao Tree' },
   avocado: { bg: 'bg-green-500', border: 'border-green-600', text: 'text-green-800', label: 'Avocado' },
+  'white-radish': { bg: 'bg-slate-300', border: 'border-slate-400', text: 'text-slate-700', label: 'White Radish' },
 };
 
 const DEFAULT_CROP_COLOR = { bg: 'bg-gray-400', border: 'border-gray-500', text: 'text-gray-700', label: '?' };
