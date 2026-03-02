@@ -5,6 +5,8 @@ import { getSellPrice, getProfit, getMargin, computeCostToMake } from '../utils/
 import { formatGold, formatPercent, categoryLabel } from '../utils/formatters';
 import { StarRating } from '../components/StarRating';
 import { Badge, TbdBadge } from '../components/Badge';
+import { RecipeModal } from '../components/RecipeModal';
+import { useBatchPlanner } from '../context/BatchPlannerContext';
 
 type SortField = 'name' | 'level' | 'cost' | 'sell' | 'profit' | 'margin';
 type SortDir = 'asc' | 'desc';
@@ -58,11 +60,13 @@ function SortArrow({ field, sortField, sortDir }: { field: SortField; sortField:
 }
 
 export function ProfitPage() {
+  const { items, addItem, decrementItem } = useBatchPlanner();
   const [star, setStar] = useState<StarRatingType>(3);
   const [levelFilter, setLevelFilter] = useState<number | 'all'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
   const [sortField, setSortField] = useState<SortField>('profit');
   const [sortDir, setSortDir] = useState<SortDir>('desc');
+  const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
   const levels = useMemo(() => getAllLevels(), []);
   const categories = useMemo(() => getAllCategories(), []);
@@ -275,7 +279,8 @@ export function ProfitPage() {
               {sorted.map((item, idx) => (
                 <tr
                   key={item.recipe.id}
-                  className={`border-t border-peach/20 hover:bg-peach/10 transition-colors ${
+                  onClick={() => setSelectedRecipe(item.recipe)}
+                  className={`border-t border-peach/20 hover:bg-peach/10 transition-colors cursor-pointer ${
                     idx % 2 === 0 ? 'bg-white' : 'bg-cream/50'
                   }`}
                 >
@@ -346,7 +351,8 @@ export function ProfitPage() {
         {sorted.map((item) => (
           <div
             key={item.recipe.id}
-            className="rounded-xl bg-white shadow-sm border border-peach/30 p-4 space-y-3"
+            onClick={() => setSelectedRecipe(item.recipe)}
+            className="rounded-xl bg-white shadow-sm border border-peach/30 p-4 space-y-3 cursor-pointer hover:bg-peach/10 transition-colors"
           >
             {/* Card Header */}
             <div className="flex items-start justify-between gap-2">
@@ -430,6 +436,18 @@ export function ProfitPage() {
           </button>
         </div>
       </div>
+
+      {/* Detail modal */}
+      {selectedRecipe && (
+        <RecipeModal
+          recipe={selectedRecipe}
+          star={star}
+          onClose={() => setSelectedRecipe(null)}
+          onIncrement={() => addItem(selectedRecipe.id, 1, star)}
+          onDecrement={() => decrementItem(selectedRecipe.id, star)}
+          plannerQuantity={items.find(i => i.recipeId === selectedRecipe.id && i.starRating === star)?.quantity ?? 0}
+        />
+      )}
     </div>
   );
 }
