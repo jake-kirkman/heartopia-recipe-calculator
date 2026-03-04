@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { recipes } from '../data/recipes';
 import { ingredients } from '../data/ingredients';
 import type { Recipe, StarRating as StarRatingType, IngredientSource } from '../data/types';
@@ -50,6 +51,11 @@ const INVENTORY_SORT_OPTIONS = [
    ================================================================ */
 
 export function InventoryPage() {
+  useDocumentMeta({
+    title: 'Inventory Checker',
+    description: 'Track your Heartopia ingredient inventory and instantly see which recipes you can craft. Enter quantities to find craftable recipes and plan your cooking.',
+  });
+
   const { items, addItem, decrementItem } = useBatchPlanner();
 
   /* ── Persisted inventory ──────────────────────────────────────── */

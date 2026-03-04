@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { recipes } from '../data/recipes';
 import type { Recipe, StarRating as StarRatingType } from '../data/types';
 import { RecipeCard } from '../components/RecipeCard';
@@ -8,6 +9,11 @@ import { useRecipeFilters } from '../hooks/useRecipeFilters';
 import { useBatchPlanner } from '../context/BatchPlannerContext';
 
 export function RecipesPage() {
+  useDocumentMeta({
+    title: 'Recipe Browser',
+    description: 'Browse all 65+ Heartopia cooking recipes with ingredient details, sell prices, star ratings, and unlock requirements. Filter by level, category, and more.',
+  });
+
   const { items, addItem, decrementItem } = useBatchPlanner();
   const [star, setStar] = useState<StarRatingType>(1);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);

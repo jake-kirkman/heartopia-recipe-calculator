@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jake-kirkman.github.io/heartopia-recipe-calculator/sitemap.xml

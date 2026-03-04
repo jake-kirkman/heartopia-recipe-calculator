@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 
 const features = [
   {
@@ -40,6 +41,11 @@ const stats = [
 ];
 
 export function HomePage() {
+  useDocumentMeta({
+    title: 'Home',
+    description: 'Optimize your Heartopia cooking profits. Browse 65+ recipes, compare profit margins at every star rating, plan batch cooking sessions, and track your ingredients.',
+  });
+
   return (
     <div className="space-y-10">
       {/* Hero */}
