@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { recipes } from '../data/recipes';
 import type { StarRating as StarRatingType, Recipe } from '../data/types';
 import { getSellPrice, getProfit, getMargin, computeCostToMake } from '../utils/calculations';
@@ -60,6 +61,11 @@ function SortArrow({ field, sortField, sortDir }: { field: SortField; sortField:
 }
 
 export function ProfitPage() {
+  useDocumentMeta({
+    title: 'Profit Calculator',
+    description: 'Compare Heartopia recipe profits and margins at any star rating. Find the most profitable recipes to cook with sortable cost, sell price, profit, and margin columns.',
+  });
+
   const { items, addItem, decrementItem } = useBatchPlanner();
   const [star, setStar] = useState<StarRatingType>(3);
   const [levelFilter, setLevelFilter] = useState<number | 'all'>('all');

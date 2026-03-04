@@ -1,4 +1,5 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { recipes } from '../data/recipes';
 import { ingredients } from '../data/ingredients';
 import type { Recipe, StarRating as StarRatingType, StarOdds } from '../data/types';
@@ -34,6 +35,11 @@ const SOURCE_LABEL: Record<string, string> = {
 };
 
 export function PlannerPage() {
+  useDocumentMeta({
+    title: 'Batch Cooking Planner',
+    description: 'Plan Heartopia batch cooking sessions. Build a recipe list, calculate ingredient totals, generate shopping lists with daily limits, and track farming needs.',
+  });
+
   const { items, addItem, decrementItem, removeItem, updateItem, clearItems } = useBatchPlanner();
   const [search, setSearch] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);

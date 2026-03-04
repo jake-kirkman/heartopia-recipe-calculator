@@ -1,0 +1,17 @@
+{
+  "name": "Heartopia Recipe Calculator",
+  "short_name": "Heartopia Recipes",
+  "description": "Optimize your Heartopia cooking profits. Browse 65+ recipes, compare profit margins, plan batch cooking sessions, and track ingredients.",
+  "start_url": "/heartopia-recipe-calculator/",
+  "display": "standalone",
+  "background_color": "#FFF7ED",
+  "theme_color": "#F97066",
+  "categories": ["games", "utilities"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

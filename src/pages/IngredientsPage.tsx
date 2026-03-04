@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { ingredients } from '../data/ingredients';
 import { crops, INGREDIENT_TO_CROP_ID } from '../data/crops';
 import type { Ingredient } from '../data/types';
@@ -248,6 +249,11 @@ function SpecialTable() {
 // ---------------------------------------------------------------------------
 
 export function IngredientsPage() {
+  useDocumentMeta({
+    title: 'Ingredient Reference',
+    description: 'Complete Heartopia ingredient guide. Shop prices and daily limits, foraged item locations, crop growth times and seed costs, fish, and special merchant goods from Doris.',
+  });
+
   const [activeTab, setActiveTab] = useState<TabKey>('shop');
 
   return (

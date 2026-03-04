@@ -2,11 +2,119 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Heartopia Recipe Calculator</title>
+    <title>Heartopia Recipe Calculator - Cooking Profit Guide & Planner</title>
+
+    <!-- Primary Meta Tags -->
+    <meta name="description" content="Optimize your Heartopia cooking profits with our recipe calculator. Browse 65+ recipes, compare profit margins at every star rating, plan batch cooking sessions, and track ingredients." />
+    <meta name="keywords" content="Heartopia, Heartopia recipes, Heartopia cooking, Heartopia profit calculator, Heartopia ingredients, Heartopia recipe guide, Heartopia cooking guide, Heartopia game guide, Heartopia planner, Heartopia wiki" />
+    <meta name="author" content="jake-kirkman" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#F97066" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://jake-kirkman.github.io/heartopia-recipe-calculator/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jake-kirkman.github.io/heartopia-recipe-calculator/" />
+    <meta property="og:title" content="Heartopia Recipe Calculator - Cooking Profit Guide & Planner" />
+    <meta property="og:description" content="Optimize your Heartopia cooking profits. Browse 65+ recipes, compare profit margins, plan batch cooking sessions, and track your ingredients." />
+    <meta property="og:site_name" content="Heartopia Recipe Calculator" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="https://jake-kirkman.github.io/heartopia-recipe-calculator/" />
+    <meta name="twitter:title" content="Heartopia Recipe Calculator - Cooking Profit Guide & Planner" />
+    <meta name="twitter:description" content="Optimize your Heartopia cooking profits. Browse 65+ recipes, compare profit margins, plan batch cooking sessions, and track your ingredients." />
+
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>" />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/heartopia-recipe-calculator/manifest.json" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Heartopia Recipe Calculator",
+      "description": "A fan-made tool to optimize cooking profits in Heartopia. Browse 65+ recipes, compare profit margins at every star rating, plan batch cooking sessions, and track ingredients.",
+      "url": "https://jake-kirkman.github.io/heartopia-recipe-calculator/",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "jake-kirkman",
+        "url": "https://github.com/jake-kirkman"
+      },
+      "about": {
+        "@type": "VideoGame",
+        "name": "Heartopia"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the most profitable recipe in Heartopia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the Heartopia Recipe Calculator's Profit Calculator to compare all 65+ recipes by profit and margin at any star rating. Profits vary based on star rating and ingredient costs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I calculate cooking profits in Heartopia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Heartopia Recipe Calculator compares sell prices against ingredient costs at each star rating (1-5 stars) to show your profit and margin percentage for every recipe."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where can I find Heartopia ingredient prices and locations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Ingredient Reference page lists all ingredients organized by source: shop items with prices and daily limits, foraged items, farmed crops with growth times, fish, and special merchant goods from Doris."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://jake-kirkman.github.io/heartopia-recipe-calculator/" },
+        { "@type": "ListItem", "position": 2, "name": "Recipes", "item": "https://jake-kirkman.github.io/heartopia-recipe-calculator/#/recipes" },
+        { "@type": "ListItem", "position": 3, "name": "Profit Calculator", "item": "https://jake-kirkman.github.io/heartopia-recipe-calculator/#/profit" },
+        { "@type": "ListItem", "position": 4, "name": "Ingredients", "item": "https://jake-kirkman.github.io/heartopia-recipe-calculator/#/ingredients" },
+        { "@type": "ListItem", "position": 5, "name": "Inventory", "item": "https://jake-kirkman.github.io/heartopia-recipe-calculator/#/inventory" },
+        { "@type": "ListItem", "position": 6, "name": "Batch Planner", "item": "https://jake-kirkman.github.io/heartopia-recipe-calculator/#/planner" }
+      ]
+    }
+    </script>
   </head>
   <body>
+    <noscript>
+      <h1>Heartopia Recipe Calculator</h1>
+      <p>A fan-made cooking profit calculator for Heartopia. Browse 65+ recipes, compare profit margins at every star rating, plan batch cooking sessions, and track ingredients.</p>
+      <p>This application requires JavaScript to run. Please enable JavaScript in your browser settings.</p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
