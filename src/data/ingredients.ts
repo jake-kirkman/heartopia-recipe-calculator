@@ -415,6 +415,14 @@ export const ingredients: Record<string, Ingredient> = {
     emoji: '\u{1F990}',
     notes: 'Shellfish / Crayfish',
   },
+  crab: {
+    id: 'crab',
+    name: 'Crab',
+    source: 'fished',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '\u{1F980}',
+  },
 
   // ─── Wildcards ──────────────────────────────────────────────────────
 

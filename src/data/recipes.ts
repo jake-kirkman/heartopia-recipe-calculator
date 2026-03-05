@@ -754,11 +754,13 @@ export const recipes: Recipe[] = [
     name: 'Steamed King Crab',
     level: 10,
     category: 'seafood',
-    ingredients: [],
-    basePrice: null,
+    ingredients: [
+      { ingredientId: 'crab', quantity: 3 },
+      { ingredientId: 'butter', quantity: 1 },
+    ],
+    basePrice: 1990,
     energy: null,
     unlock: { method: 'massimo', description: 'Massimo Lv10' },
-    isTbd: true,
   },
 
   // ============================================================
