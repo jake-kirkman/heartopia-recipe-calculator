@@ -9,6 +9,7 @@ const navLinks = [
   { to: '/ingredients', label: 'Ingredients' },
   { to: '/inventory', label: 'Inventory' },
   { to: '/planner', label: 'Planner' },
+  { to: '/settings', label: 'Settings' },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {

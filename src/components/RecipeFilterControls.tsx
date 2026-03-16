@@ -1,8 +1,9 @@
-import type { ReactNode } from 'react';
+import { type ReactNode, useMemo } from 'react';
 import type { StarRating as StarRatingType, RecipeCategory } from '../data/types';
-import { ALL_LEVELS, ALL_CATEGORIES } from '../data/recipeConstants';
+import { ALL_LEVELS } from '../data/recipeConstants';
 import { categoryLabel } from '../utils/formatters';
 import { StarRating } from './StarRating';
+import { useSettings } from '../context/SettingsContext';
 
 interface RecipeFilterControlsProps {
   search: string;
@@ -41,6 +42,12 @@ export function RecipeFilterControls({
   totalCount,
   children,
 }: RecipeFilterControlsProps) {
+  const { visibleRecipes } = useSettings();
+  const visibleCategories = useMemo(
+    () => Array.from(new Set(visibleRecipes.map((r) => r.category))).sort() as RecipeCategory[],
+    [visibleRecipes],
+  );
+
   return (
     <>
       <div className="flex flex-wrap items-end gap-3">
@@ -82,7 +89,7 @@ export function RecipeFilterControls({
             className="px-3 py-2 rounded-lg border border-peach/60 bg-white text-bark text-sm focus:outline-none focus:ring-2 focus:ring-coral/40"
           >
             <option value="all">All</option>
-            {ALL_CATEGORIES.map((cat) => (
+            {visibleCategories.map((cat) => (
               <option key={cat} value={cat}>
                 {categoryLabel(cat)}
               </option>

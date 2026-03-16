@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { BatchPlannerProvider } from './context/BatchPlannerContext';
+import { SettingsProvider } from './context/SettingsContext';
 import { Layout } from './components/Layout';
 import { HomePage } from './pages/HomePage';
 import { RecipesPage } from './pages/RecipesPage';
@@ -7,22 +8,26 @@ import { ProfitPage } from './pages/ProfitPage';
 import { IngredientsPage } from './pages/IngredientsPage';
 import { PlannerPage } from './pages/PlannerPage';
 import { InventoryPage } from './pages/InventoryPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 function App() {
   return (
     <HashRouter>
-      <BatchPlannerProvider>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/recipes" element={<RecipesPage />} />
-            <Route path="/profit" element={<ProfitPage />} />
-            <Route path="/ingredients" element={<IngredientsPage />} />
-            <Route path="/inventory" element={<InventoryPage />} />
-            <Route path="/planner" element={<PlannerPage />} />
-          </Routes>
-        </Layout>
-      </BatchPlannerProvider>
+      <SettingsProvider>
+        <BatchPlannerProvider>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/recipes" element={<RecipesPage />} />
+              <Route path="/profit" element={<ProfitPage />} />
+              <Route path="/ingredients" element={<IngredientsPage />} />
+              <Route path="/inventory" element={<InventoryPage />} />
+              <Route path="/planner" element={<PlannerPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
+            </Routes>
+          </Layout>
+        </BatchPlannerProvider>
+      </SettingsProvider>
     </HashRouter>
   );
 }

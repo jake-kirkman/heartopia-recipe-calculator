@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
-import { recipes } from '../data/recipes';
 import type { StarRating as StarRatingType, Recipe } from '../data/types';
+import { useSettings } from '../context/SettingsContext';
 import { getSellPrice, getProfit, getMargin, computeCostToMake } from '../utils/calculations';
 import { formatGold, formatPercent, categoryLabel } from '../utils/formatters';
 import { StarRating } from '../components/StarRating';
@@ -28,14 +28,14 @@ function profitColorClass(profit: number | null): string {
   return 'text-red-500';
 }
 
-function getAllLevels(): number[] {
-  const levels = new Set(recipes.map((r) => r.level));
+function getAllLevels(recipeList: Recipe[]): number[] {
+  const levels = new Set(recipeList.map((r) => r.level));
   return Array.from(levels).sort((a, b) => a - b);
 }
 
-function getAllCategories(): string[] {
+function getAllCategories(recipeList: Recipe[]): string[] {
   const cats = new Set(
-    recipes.filter((r) => r.category !== 'failure').map((r) => r.category)
+    recipeList.filter((r) => r.category !== 'failure').map((r) => r.category)
   );
   return Array.from(cats).sort();
 }
@@ -67,6 +67,7 @@ export function ProfitPage() {
   });
 
   const { items, addItem, decrementItem } = useBatchPlanner();
+  const { visibleRecipes } = useSettings();
   const [star, setStar] = useState<StarRatingType>(3);
   const [levelFilter, setLevelFilter] = useState<number | 'all'>('all');
   const [categoryFilter, setCategoryFilter] = useState<string>('all');
@@ -74,11 +75,11 @@ export function ProfitPage() {
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
-  const levels = useMemo(() => getAllLevels(), []);
-  const categories = useMemo(() => getAllCategories(), []);
+  const levels = useMemo(() => getAllLevels(visibleRecipes), [visibleRecipes]);
+  const categories = useMemo(() => getAllCategories(visibleRecipes), [visibleRecipes]);
 
   const computed = useMemo<ComputedRecipe[]>(() => {
-    return recipes
+    return visibleRecipes
       .filter((r) => r.category !== 'failure')
       .filter((r) => levelFilter === 'all' || r.level === levelFilter)
       .filter((r) => categoryFilter === 'all' || r.category === categoryFilter)
@@ -88,7 +89,7 @@ export function ProfitPage() {
         profit: getProfit(recipe, star),
         margin: getMargin(recipe, star),
       }));
-  }, [star, levelFilter, categoryFilter]);
+  }, [visibleRecipes, star, levelFilter, categoryFilter]);
 
   const sorted = useMemo(() => {
     const copy = [...computed];
