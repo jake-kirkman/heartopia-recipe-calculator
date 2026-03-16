@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { recipes } from '../data/recipes';
+import { useSettings } from '../context/SettingsContext';
 import { ingredients } from '../data/ingredients';
 import type { Recipe, StarRating as StarRatingType, StarOdds } from '../data/types';
 import { DEFAULT_STAR_ODDS } from '../data/constants';
@@ -41,6 +42,7 @@ export function PlannerPage() {
   });
 
   const { items, addItem, decrementItem, removeItem, updateItem, clearItems } = useBatchPlanner();
+  const { visibleRecipes } = useSettings();
   const [search, setSearch] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [confirmClear, setConfirmClear] = useState(false);
@@ -67,14 +69,14 @@ export function PlannerPage() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Filter recipes for dropdown (exclude failures, match by name)
+  // Filter recipes for dropdown (exclude failures, match by name, respect settings)
   const filteredRecipes = useMemo(() => {
     if (!search.trim()) return [];
     const query = search.toLowerCase();
-    return recipes
+    return visibleRecipes
       .filter((r) => r.category !== 'failure' && r.name.toLowerCase().includes(query))
       .slice(0, 8);
-  }, [search]);
+  }, [search, visibleRecipes]);
 
   // Find all active wildcards across batch items
   const activeWildcards = useMemo(() => {

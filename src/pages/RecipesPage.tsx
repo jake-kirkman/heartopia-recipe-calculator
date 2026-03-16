@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
-import { recipes } from '../data/recipes';
 import type { Recipe, StarRating as StarRatingType } from '../data/types';
 import { RecipeCard } from '../components/RecipeCard';
 import { RecipeFilterControls } from '../components/RecipeFilterControls';
 import { RecipeModal } from '../components/RecipeModal';
 import { useRecipeFilters } from '../hooks/useRecipeFilters';
 import { useBatchPlanner } from '../context/BatchPlannerContext';
+import { useSettings } from '../context/SettingsContext';
 
 export function RecipesPage() {
   useDocumentMeta({
@@ -15,6 +15,7 @@ export function RecipesPage() {
   });
 
   const { items, addItem, decrementItem } = useBatchPlanner();
+  const { visibleRecipes } = useSettings();
   const [star, setStar] = useState<StarRatingType>(1);
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
 
@@ -31,7 +32,7 @@ export function RecipesPage() {
     sortKey,
     setSortKey,
     effectiveSortOptions,
-  } = useRecipeFilters({ recipes, star });
+  } = useRecipeFilters({ recipes: visibleRecipes, star });
 
   const handleAdd = (recipeId: string) => {
     addItem(recipeId, 1, star);
@@ -43,7 +44,7 @@ export function RecipesPage() {
       <div>
         <h1 className="text-2xl font-bold text-bark">Recipe Browser</h1>
         <p className="text-wood text-sm mt-1">
-          Browse all {recipes.length} recipes. Click a card for full details.
+          Browse all {visibleRecipes.length} recipes. Click a card for full details.
         </p>
       </div>
 
@@ -63,7 +64,7 @@ export function RecipesPage() {
         showTbd={showTbd}
         onShowTbdChange={setShowTbd}
         filteredCount={filtered.length}
-        totalCount={recipes.length}
+        totalCount={visibleRecipes.length}
       />
 
       {/* Card grid */}

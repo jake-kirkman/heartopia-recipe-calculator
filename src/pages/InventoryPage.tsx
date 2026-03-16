@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, useCallback } from 'react';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
-import { recipes } from '../data/recipes';
+import { useSettings } from '../context/SettingsContext';
 import { ingredients } from '../data/ingredients';
 import type { Recipe, StarRating as StarRatingType, IngredientSource } from '../data/types';
 import { SORT_OPTIONS } from '../data/recipeConstants';
@@ -57,6 +57,7 @@ export function InventoryPage() {
   });
 
   const { items, addItem, decrementItem } = useBatchPlanner();
+  const { visibleRecipes } = useSettings();
 
   /* ── Persisted inventory ──────────────────────────────────────── */
   const [inventory, setInventory] = useLocalStorage<Record<string, number>>('heartopia-inventory', {});
@@ -104,17 +105,17 @@ export function InventoryPage() {
   /* ── Craftable counts (memoized) ──────────────────────────────── */
   const craftableCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    for (const recipe of recipes) {
+    for (const recipe of visibleRecipes) {
       counts[recipe.id] = computeCraftableCount(recipe.id, inventory);
     }
     return counts;
-  }, [inventory]);
+  }, [inventory, visibleRecipes]);
 
   /* ── Filter recipes ───────────────────────────────────────────── */
-  const visibleRecipes = useMemo(() => {
-    if (!craftableOnly) return recipes;
-    return recipes.filter((r) => (craftableCounts[r.id] ?? 0) > 0);
-  }, [craftableOnly, craftableCounts]);
+  const filteredByInventory = useMemo(() => {
+    if (!craftableOnly) return visibleRecipes;
+    return visibleRecipes.filter((r) => (craftableCounts[r.id] ?? 0) > 0);
+  }, [craftableOnly, craftableCounts, visibleRecipes]);
 
   const customSort = useCallback(
     (sortKey: string, a: Recipe, b: Recipe): number | undefined => {
@@ -143,7 +144,7 @@ export function InventoryPage() {
     setSortKey,
     effectiveSortOptions,
   } = useRecipeFilters({
-    recipes: visibleRecipes,
+    recipes: filteredByInventory,
     star,
     sortOptions: INVENTORY_SORT_OPTIONS,
     customSort,
@@ -294,7 +295,7 @@ export function InventoryPage() {
           showTbd={showTbd}
           onShowTbdChange={setShowTbd}
           filteredCount={filtered.length}
-          totalCount={recipes.length}
+          totalCount={visibleRecipes.length}
         >
           <label className="flex items-center gap-2 text-sm text-bark cursor-pointer select-none pb-0.5">
             <input
