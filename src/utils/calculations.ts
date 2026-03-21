@@ -15,6 +15,15 @@ function findRecipeForIngredient(ingredientId: string): Recipe | undefined {
   return recipes.find((r) => r.id === recipeId);
 }
 
+/** Resolve a display name for any ingredient ID, including recipe-as-ingredient */
+export function getIngredientName(ingredientId: string): string {
+  const ing = ingredients[ingredientId];
+  if (ing) return ing.name;
+  const sub = findRecipeForIngredient(ingredientId);
+  if (sub) return sub.name;
+  return ingredientId;
+}
+
 // ─── Wildcard Resolution ──────────────────────────────────────────
 
 /** Get the effective cost of an ingredient (base cost or computed cost for recipe-as-ingredient) */
@@ -189,8 +198,8 @@ export function computeBatchSummary(items: BatchItem[], overrides?: Record<strin
   // Sort by source then name
   aggIngredients.sort((a, b) => {
     if (a.source !== b.source) return a.source.localeCompare(b.source);
-    const nameA = ingredients[a.ingredientId]?.name ?? a.ingredientId;
-    const nameB = ingredients[b.ingredientId]?.name ?? b.ingredientId;
+    const nameA = getIngredientName(a.ingredientId);
+    const nameB = getIngredientName(b.ingredientId);
     return nameA.localeCompare(nameB);
   });
 

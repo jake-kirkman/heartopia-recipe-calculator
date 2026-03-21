@@ -1,8 +1,7 @@
 import type { ReactNode } from 'react';
 import type { Recipe, StarRating as StarRatingType } from '../data/types';
 import { categoryColor } from '../data/recipeConstants';
-import { ingredients } from '../data/ingredients';
-import { getSellPrice, getProfit } from '../utils/calculations';
+import { getSellPrice, getProfit, getIngredientName } from '../utils/calculations';
 import { formatGold, formatProfit, categoryLabel } from '../utils/formatters';
 import { Badge, TbdBadge } from './Badge';
 
@@ -10,8 +9,7 @@ function ingredientSummary(recipe: Recipe): string {
   if (recipe.ingredients.length === 0) return '\u2014';
   return recipe.ingredients
     .map((ri) => {
-      const ing = ingredients[ri.ingredientId];
-      const name = ing ? ing.name : ri.ingredientId;
+      const name = getIngredientName(ri.ingredientId);
       return `${ri.quantity}x ${name}`;
     })
     .join(', ');
