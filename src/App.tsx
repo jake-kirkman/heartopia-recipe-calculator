@@ -8,7 +8,6 @@ import { ProfitPage } from './pages/ProfitPage';
 import { IngredientsPage } from './pages/IngredientsPage';
 import { PlannerPage } from './pages/PlannerPage';
 import { InventoryPage } from './pages/InventoryPage';
-import { SettingsPage } from './pages/SettingsPage';
 
 function App() {
   return (
@@ -23,7 +22,6 @@ function App() {
               <Route path="/ingredients" element={<IngredientsPage />} />
               <Route path="/inventory" element={<InventoryPage />} />
               <Route path="/planner" element={<PlannerPage />} />
-              <Route path="/settings" element={<SettingsPage />} />
             </Routes>
           </Layout>
         </BatchPlannerProvider>
