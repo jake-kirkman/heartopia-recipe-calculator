@@ -1095,7 +1095,6 @@ export const recipes: Recipe[] = [
     basePrice: 900,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
-    isTbd: true,
   },
   {
     id: 'caramel-popcorn-bucket',
@@ -1110,7 +1109,6 @@ export const recipes: Recipe[] = [
     basePrice: 820,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
-    isTbd: true,
   },
   {
     id: 'salsa-wavy-potato-chips',
@@ -1124,7 +1122,6 @@ export const recipes: Recipe[] = [
     basePrice: 280,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
-    isTbd: true,
   },
   {
     id: 'romaine-lettuce-taco',
@@ -1139,7 +1136,6 @@ export const recipes: Recipe[] = [
     basePrice: 260,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
-    isTbd: true,
   },
   {
     id: 'springday-fruit-black-tea',
@@ -1154,7 +1150,6 @@ export const recipes: Recipe[] = [
     basePrice: 460,
     energy: 45,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
-    isTbd: true,
   },
 
   // --- Composite Recipes ---
@@ -1171,7 +1166,6 @@ export const recipes: Recipe[] = [
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
-    isTbd: true,
   },
   {
     id: 'sweet-duo-bucket',
@@ -1186,7 +1180,6 @@ export const recipes: Recipe[] = [
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
-    isTbd: true,
   },
   {
     id: 'wild-vegetable-celtuce-taco',
@@ -1201,7 +1194,6 @@ export const recipes: Recipe[] = [
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
-    isTbd: true,
   },
   {
     id: 'colorful-movie-combo',
@@ -1211,13 +1203,12 @@ export const recipes: Recipe[] = [
     ingredients: [
       { ingredientId: 'recipe-springday-fruit-black-tea', quantity: 1 },
       { ingredientId: 'recipe-sweet-duo-bucket', quantity: 1 },
+      { ingredientId: 'recipe-wild-vegetable-celtuce-taco', quantity: 1 },
     ],
     basePrice: 1960,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
-    isTbd: true,
-    notes: 'Has additional unknown ingredient(s)',
   },
   {
     id: 'supreme-movie-meal',
@@ -1227,12 +1218,11 @@ export const recipes: Recipe[] = [
     ingredients: [
       { ingredientId: 'recipe-springday-fruit-black-tea', quantity: 1 },
       { ingredientId: 'recipe-savory-double-combo-bucket', quantity: 1 },
+      { ingredientId: 'recipe-wild-vegetable-celtuce-taco', quantity: 2 },
     ],
     basePrice: 2370,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
-    isTbd: true,
-    notes: 'Has additional unknown ingredient(s)',
   },
 ];
