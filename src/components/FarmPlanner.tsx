@@ -10,7 +10,7 @@ import { CollapsibleSection } from './CollapsibleSection';
 
 const CROP_COLORS: Record<string, { bg: string; border: string; text: string; label: string }> = {
   tomato: { bg: 'bg-red-400', border: 'border-red-500', text: 'text-red-700', label: 'Tomato' },
-  potato: { bg: 'bg-amber-400', border: 'border-amber-500', text: 'text-amber-700', label: 'Potato' },
+  potato: { bg: 'bg-orange-300', border: 'border-orange-400', text: 'text-orange-700', label: 'Potato' },
   wheat: { bg: 'bg-yellow-300', border: 'border-yellow-400', text: 'text-yellow-700', label: 'Wheat' },
   lettuce: { bg: 'bg-green-400', border: 'border-green-500', text: 'text-green-700', label: 'Lettuce' },
   pineapple: { bg: 'bg-lime-400', border: 'border-lime-500', text: 'text-lime-700', label: 'Pineapple' },
@@ -23,6 +23,7 @@ const CROP_COLORS: Record<string, { bg: string; border: string; text: string; la
   'cacao-tree': { bg: 'bg-amber-700', border: 'border-amber-800', text: 'text-amber-900', label: 'Cacao Tree' },
   avocado: { bg: 'bg-green-500', border: 'border-green-600', text: 'text-green-800', label: 'Avocado' },
   'white-radish': { bg: 'bg-slate-300', border: 'border-slate-400', text: 'text-slate-700', label: 'White Radish' },
+  'romaine-lettuce': { bg: 'bg-teal-400', border: 'border-teal-500', text: 'text-teal-700', label: 'Romaine Lettuce' },
 };
 
 const DEFAULT_CROP_COLOR = { bg: 'bg-gray-400', border: 'border-gray-500', text: 'text-gray-700', label: '?' };
