@@ -23,9 +23,10 @@ const CROP_COLORS: Record<string, { bg: string; border: string; text: string; la
   'cacao-tree': { bg: 'bg-amber-700', border: 'border-amber-800', text: 'text-amber-900', label: 'Cacao Tree' },
   avocado: { bg: 'bg-green-500', border: 'border-green-600', text: 'text-green-800', label: 'Avocado' },
   'white-radish': { bg: 'bg-slate-300', border: 'border-slate-400', text: 'text-slate-700', label: 'White Radish' },
+  'romaine-lettuce': { bg: 'bg-teal-400', border: 'border-teal-500', text: 'text-teal-700', label: 'Romaine Lettuce' },
 };
 
-const DEFAULT_CROP_COLOR = { bg: 'bg-teal-400', border: 'border-teal-500', text: 'text-teal-700', label: '?' };
+const DEFAULT_CROP_COLOR = { bg: 'bg-gray-400', border: 'border-gray-500', text: 'text-gray-700', label: '?' };
 
 /** Format a time offset as "HH:mm" with a "+N day" prefix when it rolls past midnight */
 function formatPhaseTime(startTimeStr: string, offsetMinutes: number): string {
