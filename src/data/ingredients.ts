@@ -543,6 +543,15 @@ export const ingredients: Record<string, Ingredient> = {
     emoji: '\u{1F33F}',
     notes: 'Dreamlight Cinematic event wild green',
   },
+  celtuce: {
+    id: 'celtuce',
+    name: 'Celtuce',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
+  },
 
   // Foraged (Limited Flower)
   dandelion: {
@@ -560,10 +569,10 @@ export const ingredients: Record<string, Ingredient> = {
     id: 'romaine-lettuce',
     name: 'Romaine Lettuce',
     source: 'farmed',
-    cost: 20,
+    cost: 10,
     dailyLimit: null,
     emoji: '\u{1F96C}',
-    notes: 'Seed cost 20G (Dreamlight Cinematic event crop)',
+    notes: 'Seed cost 10G (Dreamlight Cinematic event crop)',
   },
 
   // Wildcards (Dreamlight Cinematic)
@@ -574,7 +583,7 @@ export const ingredients: Record<string, Ingredient> = {
     cost: 0,
     dailyLimit: null,
     isWildcard: true,
-    wildcardOptions: ['fiddlehead', 'tall-mustard', 'burdock', 'mustard-greens'],
+    wildcardOptions: ['fiddlehead', 'tall-mustard', 'burdock', 'mustard-greens', 'celtuce'],
     notes: 'Dreamlight Cinematic event wild greens',
   },
 
@@ -583,17 +592,17 @@ export const ingredients: Record<string, Ingredient> = {
     id: 'springday-brown-sugar',
     name: 'Springday Brown Sugar',
     source: 'shop',
-    cost: null,
+    cost: 50,
     dailyLimit: null,
-    notes: 'Dreamlight Cinematic event limited ingredient',
+    notes: 'Dreamlight Cinematic event limited ingredient (assumed 50G)',
   },
   salsa: {
     id: 'salsa',
     name: 'Salsa',
     source: 'shop',
-    cost: null,
+    cost: 50,
     dailyLimit: null,
-    notes: 'Dreamlight Cinematic event limited ingredient',
+    notes: 'Dreamlight Cinematic event limited ingredient (assumed 50G)',
   },
 
 };
