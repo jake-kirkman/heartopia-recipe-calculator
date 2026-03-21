@@ -1078,7 +1078,7 @@ export const recipes: Recipe[] = [
   // ============================================================
   // DREAMLIGHT CINEMATIC EVENT (Popcorn Serving Cart)
   // Recipe names and ingredients confirmed from in-game data.
-  // Sell prices still TBD until community data is available.
+  // Some sell prices confirmed from in-game data.
   // ============================================================
 
   // --- Base Recipes ---
@@ -1092,7 +1092,7 @@ export const recipes: Recipe[] = [
       { ingredientId: 'any-mushroom', quantity: 1 },
       { ingredientId: 'butter', quantity: 2 },
     ],
-    basePrice: null,
+    basePrice: 900,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isTbd: true,
@@ -1107,7 +1107,7 @@ export const recipes: Recipe[] = [
       { ingredientId: 'springday-brown-sugar', quantity: 2 },
       { ingredientId: 'butter', quantity: 1 },
     ],
-    basePrice: null,
+    basePrice: 820,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isTbd: true,
@@ -1121,7 +1121,7 @@ export const recipes: Recipe[] = [
       { ingredientId: 'potato', quantity: 2 },
       { ingredientId: 'salsa', quantity: 1 },
     ],
-    basePrice: null,
+    basePrice: 280,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isTbd: true,
@@ -1151,7 +1151,7 @@ export const recipes: Recipe[] = [
       { ingredientId: 'any-fruit', quantity: 1 },
       { ingredientId: 'springday-brown-sugar', quantity: 1 },
     ],
-    basePrice: null,
+    basePrice: 460,
     energy: 45,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isTbd: true,
@@ -1167,7 +1167,7 @@ export const recipes: Recipe[] = [
       { ingredientId: 'recipe-savory-popcorn-bucket', quantity: 1 },
       { ingredientId: 'recipe-salsa-wavy-potato-chips', quantity: 1 },
     ],
-    basePrice: null,
+    basePrice: 1230,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
@@ -1182,7 +1182,7 @@ export const recipes: Recipe[] = [
       { ingredientId: 'recipe-caramel-popcorn-bucket', quantity: 1 },
       { ingredientId: 'recipe-salsa-wavy-potato-chips', quantity: 1 },
     ],
-    basePrice: null,
+    basePrice: 1150,
     energy: null,
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
