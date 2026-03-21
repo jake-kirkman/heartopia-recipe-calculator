@@ -584,7 +584,7 @@ export const ingredients: Record<string, Ingredient> = {
     name: 'Springday Brown Sugar',
     source: 'shop',
     cost: 50,
-    dailyLimit: null,
+    dailyLimit: 50,
     notes: 'Dreamlight Cinematic event limited ingredient (assumed 50G)',
   },
   salsa: {
@@ -592,7 +592,7 @@ export const ingredients: Record<string, Ingredient> = {
     name: 'Salsa',
     source: 'shop',
     cost: 50,
-    dailyLimit: null,
+    dailyLimit: 50,
     notes: 'Dreamlight Cinematic event limited ingredient (assumed 50G)',
   },
 

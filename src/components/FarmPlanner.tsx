@@ -10,7 +10,7 @@ import { CollapsibleSection } from './CollapsibleSection';
 
 const CROP_COLORS: Record<string, { bg: string; border: string; text: string; label: string }> = {
   tomato: { bg: 'bg-red-400', border: 'border-red-500', text: 'text-red-700', label: 'Tomato' },
-  potato: { bg: 'bg-amber-400', border: 'border-amber-500', text: 'text-amber-700', label: 'Potato' },
+  potato: { bg: 'bg-orange-300', border: 'border-orange-400', text: 'text-orange-700', label: 'Potato' },
   wheat: { bg: 'bg-yellow-300', border: 'border-yellow-400', text: 'text-yellow-700', label: 'Wheat' },
   lettuce: { bg: 'bg-green-400', border: 'border-green-500', text: 'text-green-700', label: 'Lettuce' },
   pineapple: { bg: 'bg-lime-400', border: 'border-lime-500', text: 'text-lime-700', label: 'Pineapple' },
@@ -25,7 +25,7 @@ const CROP_COLORS: Record<string, { bg: string; border: string; text: string; la
   'white-radish': { bg: 'bg-slate-300', border: 'border-slate-400', text: 'text-slate-700', label: 'White Radish' },
 };
 
-const DEFAULT_CROP_COLOR = { bg: 'bg-gray-400', border: 'border-gray-500', text: 'text-gray-700', label: '?' };
+const DEFAULT_CROP_COLOR = { bg: 'bg-teal-400', border: 'border-teal-500', text: 'text-teal-700', label: '?' };
 
 /** Format a time offset as "HH:mm" with a "+N day" prefix when it rolls past midnight */
 function formatPhaseTime(startTimeStr: string, offsetMinutes: number): string {
