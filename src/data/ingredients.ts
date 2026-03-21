@@ -543,15 +543,6 @@ export const ingredients: Record<string, Ingredient> = {
     emoji: '\u{1F33F}',
     notes: 'Dreamlight Cinematic event wild green',
   },
-  celtuce: {
-    id: 'celtuce',
-    name: 'Celtuce',
-    source: 'foraged',
-    cost: 0,
-    dailyLimit: null,
-    emoji: '\u{1F33F}',
-    notes: 'Dreamlight Cinematic event wild green',
-  },
 
   // Foraged (Limited Flower)
   dandelion: {
@@ -583,7 +574,7 @@ export const ingredients: Record<string, Ingredient> = {
     cost: 0,
     dailyLimit: null,
     isWildcard: true,
-    wildcardOptions: ['fiddlehead', 'tall-mustard', 'burdock', 'mustard-greens', 'celtuce'],
+    wildcardOptions: ['fiddlehead', 'tall-mustard', 'burdock', 'mustard-greens'],
     notes: 'Dreamlight Cinematic event wild greens',
   },
 
