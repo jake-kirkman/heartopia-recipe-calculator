@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useBatchPlanner } from '../context/BatchPlannerContext';
+import { useSettings } from '../context/SettingsContext';
 
 const navLinks = [
   { to: '/', label: 'Home' },
@@ -9,12 +10,13 @@ const navLinks = [
   { to: '/ingredients', label: 'Ingredients' },
   { to: '/inventory', label: 'Inventory' },
   { to: '/planner', label: 'Planner' },
-  { to: '/settings', label: 'Settings' },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { items } = useBatchPlanner();
+  const { frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled } = useSettings();
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const plannerCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -119,19 +121,94 @@ export function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="border-t border-peach/30 py-4 text-center text-sm text-wood/60 space-y-1">
-        <p>Heartopia Recipe Calculator - Fan-made tool. Not affiliated with the game developers.</p>
-        <p>
-          Got a feature idea, found a bug, or have better figures?{' '}
-          <a
-            href="https://github.com/jake-kirkman/heartopia-recipe-calculator/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-coral hover:text-coral/80 underline"
+      <footer className="border-t border-peach/30">
+        {/* Collapsible Settings */}
+        <div className="max-w-7xl mx-auto px-4">
+          <button
+            onClick={() => setSettingsOpen(!settingsOpen)}
+            className="w-full flex items-center justify-between py-3 text-sm font-semibold text-wood hover:text-bark cursor-pointer bg-transparent border-none transition-colors"
           >
-            Raise an issue on GitHub
-          </a>
-        </p>
+            <span className="flex items-center gap-2">
+              <span className={`inline-block transition-transform duration-200 ${settingsOpen ? 'rotate-90' : ''}`}>
+                &#9654;
+              </span>
+              Settings
+            </span>
+            <span className="text-xs font-normal text-wood/50">
+              {frostsporeEnabled || dreamlightCinematicEnabled
+                ? [frostsporeEnabled && 'Frostspore', dreamlightCinematicEnabled && 'Dreamlight'].filter(Boolean).join(', ') + ' active'
+                : 'No events active'}
+            </span>
+          </button>
+
+          {settingsOpen && (
+            <div className="pb-4 space-y-3">
+              <div className="rounded-lg bg-white/60 border border-peach/20 p-4 space-y-3">
+                <label className="flex items-center justify-between gap-4 cursor-pointer">
+                  <div>
+                    <span className="font-medium text-bark text-sm">Frostspore Event</span>
+                    <p className="text-xs text-wood mt-0.5">
+                      Show Frostspore Event recipes and ingredients.
+                    </p>
+                  </div>
+                  <button
+                    role="switch"
+                    aria-checked={frostsporeEnabled}
+                    onClick={() => setFrostsporeEnabled((prev) => !prev)}
+                    className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-coral/40 focus:ring-offset-2 ${
+                      frostsporeEnabled ? 'bg-coral' : 'bg-wood/30'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition duration-200 ease-in-out ${
+                        frostsporeEnabled ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </label>
+
+                <label className="flex items-center justify-between gap-4 cursor-pointer">
+                  <div>
+                    <span className="font-medium text-bark text-sm">Dreamlight Cinematic</span>
+                    <p className="text-xs text-wood mt-0.5">
+                      Show Dreamlight Cinematic event recipes and ingredients.
+                    </p>
+                  </div>
+                  <button
+                    role="switch"
+                    aria-checked={dreamlightCinematicEnabled}
+                    onClick={() => setDreamlightCinematicEnabled((prev) => !prev)}
+                    className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-coral/40 focus:ring-offset-2 ${
+                      dreamlightCinematicEnabled ? 'bg-coral' : 'bg-wood/30'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition duration-200 ease-in-out ${
+                        dreamlightCinematicEnabled ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </label>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Footer info */}
+        <div className="border-t border-peach/20 py-4 text-center text-sm text-wood/60 space-y-1">
+          <p>Heartopia Recipe Calculator - Fan-made tool. Not affiliated with the game developers.</p>
+          <p>
+            Got a feature idea, found a bug, or have better figures?{' '}
+            <a
+              href="https://github.com/jake-kirkman/heartopia-recipe-calculator/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-coral hover:text-coral/80 underline"
+            >
+              Raise an issue on GitHub
+            </a>
+          </p>
+        </div>
       </footer>
     </div>
   );
