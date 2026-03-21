@@ -16,6 +16,7 @@ export const INGREDIENT_TO_CROP_ID: Record<string, string> = {
   'cocoa-bean': 'cacao-tree',
   avocado: 'avocado',
   'white-radish': 'white-radish',
+  'romaine-lettuce': 'romaine-lettuce',
 };
 
 export const crops: CropData[] = [
@@ -144,6 +145,15 @@ export const crops: CropData[] = [
     growthTime: '15 min',
     growthMinutes: 15,
     sellPrice: 30,
+  },
+  {
+    id: 'romaine-lettuce',
+    name: 'Romaine Lettuce',
+    gardeningLevel: 1,
+    seedCost: 20,
+    growthTime: '30 min',
+    growthMinutes: 30,
+    sellPrice: 60,
   },
 ];
 

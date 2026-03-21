@@ -17,7 +17,8 @@ export type RecipeCategory =
   | 'burger'
   | 'other'
   | 'failure'
-  | 'frostspore-event';
+  | 'frostspore-event'
+  | 'dreamlight-cinematic';
 
 export type UnlockMethod = 'starting' | 'massimo' | 'quest' | 'doris' | 'variant' | 'event';
 

@@ -626,4 +626,120 @@ export const ingredients: Record<string, Ingredient> = {
     dailyLimit: null,
     notes: 'Crafted recipe used as ingredient in Aurora Banquet',
   },
+
+  // ─── Dreamlight Cinematic Event Ingredients ───────────────────────
+
+  // Foraged (Wild Greens)
+  fiddlehead: {
+    id: 'fiddlehead',
+    name: 'Fiddlehead',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
+  },
+  'tall-mustard': {
+    id: 'tall-mustard',
+    name: 'Tall Mustard',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
+  },
+  burdock: {
+    id: 'burdock',
+    name: 'Burdock',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
+  },
+  'mustard-greens': {
+    id: 'mustard-greens',
+    name: 'Mustard Greens',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
+  },
+
+  // Foraged (Limited Flower)
+  dandelion: {
+    id: 'dandelion',
+    name: 'Dandelion',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '\u{1F33C}',
+    notes: 'Dreamlight Cinematic event limited flower',
+  },
+
+  // Farmed (Limited Crop)
+  'romaine-lettuce': {
+    id: 'romaine-lettuce',
+    name: 'Romaine Lettuce',
+    source: 'farmed',
+    cost: 20,
+    dailyLimit: null,
+    emoji: '\u{1F96C}',
+    notes: 'Seed cost 20G (Dreamlight Cinematic event crop)',
+  },
+
+  // Wildcards (Dreamlight Cinematic)
+  'any-wild-green': {
+    id: 'any-wild-green',
+    name: 'Any Wild Green',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    isWildcard: true,
+    wildcardOptions: ['fiddlehead', 'tall-mustard', 'burdock', 'mustard-greens'],
+    notes: 'Dreamlight Cinematic event wild greens',
+  },
+
+  // Recipe-as-Ingredient (Dreamlight Cinematic composites)
+  'recipe-butter-popcorn': {
+    id: 'recipe-butter-popcorn',
+    name: 'Butter Popcorn',
+    source: 'crafted',
+    cost: null,
+    dailyLimit: null,
+    notes: 'Crafted recipe used as ingredient in Movie Night Platter',
+  },
+  'recipe-caesar-salad': {
+    id: 'recipe-caesar-salad',
+    name: 'Caesar Salad',
+    source: 'crafted',
+    cost: null,
+    dailyLimit: null,
+    notes: 'Crafted recipe used as ingredient in Movie Night Platter',
+  },
+  'recipe-movie-night-platter': {
+    id: 'recipe-movie-night-platter',
+    name: 'Movie Night Platter',
+    source: 'crafted',
+    cost: null,
+    dailyLimit: null,
+    notes: 'Crafted recipe used as ingredient in Premiere Feast',
+  },
+  'recipe-wild-greens-soup': {
+    id: 'recipe-wild-greens-soup',
+    name: 'Wild Greens Soup',
+    source: 'crafted',
+    cost: null,
+    dailyLimit: null,
+    notes: 'Crafted recipe used as ingredient in Premiere Feast',
+  },
+  'recipe-dandelion-tea': {
+    id: 'recipe-dandelion-tea',
+    name: 'Dandelion Tea',
+    source: 'crafted',
+    cost: null,
+    dailyLimit: null,
+    notes: 'Crafted recipe used as ingredient in Premiere Feast',
+  },
 };
