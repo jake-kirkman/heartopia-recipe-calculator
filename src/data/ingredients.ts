@@ -701,45 +701,4 @@ export const ingredients: Record<string, Ingredient> = {
     notes: 'Dreamlight Cinematic event wild greens',
   },
 
-  // Recipe-as-Ingredient (Dreamlight Cinematic composites)
-  'recipe-butter-popcorn': {
-    id: 'recipe-butter-popcorn',
-    name: 'Butter Popcorn',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Movie Night Platter',
-  },
-  'recipe-caesar-salad': {
-    id: 'recipe-caesar-salad',
-    name: 'Caesar Salad',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Movie Night Platter',
-  },
-  'recipe-movie-night-platter': {
-    id: 'recipe-movie-night-platter',
-    name: 'Movie Night Platter',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Premiere Feast',
-  },
-  'recipe-wild-greens-soup': {
-    id: 'recipe-wild-greens-soup',
-    name: 'Wild Greens Soup',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Premiere Feast',
-  },
-  'recipe-dandelion-tea': {
-    id: 'recipe-dandelion-tea',
-    name: 'Dandelion Tea',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Premiere Feast',
-  },
 };
