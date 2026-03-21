@@ -5,7 +5,7 @@ import { useSettings } from '../context/SettingsContext';
 import { ingredients } from '../data/ingredients';
 import type { Recipe, StarRating as StarRatingType, StarOdds } from '../data/types';
 import { DEFAULT_STAR_ODDS } from '../data/constants';
-import { getSellPrice, computeBatchSummary, findWildcardsInRecipe, getIngredientCost, resolveWildcardDefault, computeExpectedRevenue } from '../utils/calculations';
+import { getSellPrice, computeBatchSummary, findWildcardsInRecipe, getIngredientCost, resolveWildcardDefault, computeExpectedRevenue, getIngredientName } from '../utils/calculations';
 import { formatGold } from '../utils/formatters';
 import { StarRating } from '../components/StarRating';
 import { NumberInput } from '../components/NumberInput';
@@ -343,8 +343,7 @@ export function PlannerPage() {
                     className="w-full rounded-lg border border-peach/50 bg-white px-3 py-1.5 text-sm text-bark focus:outline-none focus:ring-2 focus:ring-coral/40"
                   >
                     {wIng.wildcardOptions.map((optionId) => {
-                      const optIng = ingredients[optionId];
-                      const optName = optIng?.name ?? optionId;
+                      const optName = getIngredientName(optionId);
                       const optCost = getIngredientCost(optionId);
                       return (
                         <option key={optionId} value={optionId}>
@@ -551,8 +550,7 @@ export function PlannerPage() {
             <tbody>
               {Object.entries(ingredientsBySource).map(([source, ings]) => (
                 ings.map((ing, i) => {
-                  const ingData = ingredients[ing.ingredientId];
-                  const name = ingData?.name ?? ing.ingredientId;
+                  const name = getIngredientName(ing.ingredientId);
                   const originalIng = useInventory ? summary.ingredients.find((s) => s.ingredientId === ing.ingredientId) : null;
                   const originalQty = originalIng?.totalQuantity ?? ing.totalQuantity;
                   const inStock = useInventory ? Math.min(inventory[ing.ingredientId] ?? 0, originalQty) : 0;
@@ -617,8 +615,7 @@ export function PlannerPage() {
               </thead>
               <tbody>
                 {shopIngredients.map((ing) => {
-                  const ingData = ingredients[ing.ingredientId];
-                  const name = ingData?.name ?? ing.ingredientId;
+                  const name = getIngredientName(ing.ingredientId);
                   const isBottleneck = ing.daysNeeded !== null && ing.daysNeeded > 1;
 
                   return (
@@ -655,8 +652,7 @@ export function PlannerPage() {
           {/* Mobile cards */}
           <div className="md:hidden divide-y divide-coral/10">
             {shopIngredients.map((ing) => {
-              const ingData = ingredients[ing.ingredientId];
-              const name = ingData?.name ?? ing.ingredientId;
+              const name = getIngredientName(ing.ingredientId);
               const isBottleneck = ing.daysNeeded !== null && ing.daysNeeded > 1;
 
               return (

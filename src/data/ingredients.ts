@@ -504,126 +504,96 @@ export const ingredients: Record<string, Ingredient> = {
     notes: 'References jam recipe outputs; options populated from recipe data',
   },
 
-  // ─── Recipe-as-Ingredient (crafted items used in composite recipes) ─
+  // ─── Dreamlight Cinematic Event Ingredients ───────────────────────
 
-  'recipe-seafood-pizza': {
-    id: 'recipe-seafood-pizza',
-    name: 'Seafood Pizza',
-    source: 'crafted',
-    cost: null,
+  // Foraged (Wild Greens)
+  fiddlehead: {
+    id: 'fiddlehead',
+    name: 'Fiddlehead',
+    source: 'foraged',
+    cost: 0,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in composite recipes',
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
   },
-  'recipe-apple-pie': {
-    id: 'recipe-apple-pie',
-    name: 'Apple Pie',
-    source: 'crafted',
-    cost: null,
+  'tall-mustard': {
+    id: 'tall-mustard',
+    name: 'Tall Mustard',
+    source: 'foraged',
+    cost: 0,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in composite recipes',
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
   },
-  'recipe-fish-n-chips': {
-    id: 'recipe-fish-n-chips',
-    name: 'Fish N Chips',
-    source: 'crafted',
-    cost: null,
+  burdock: {
+    id: 'burdock',
+    name: 'Burdock',
+    source: 'foraged',
+    cost: 0,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in composite recipes',
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
   },
-  'recipe-tiramisu': {
-    id: 'recipe-tiramisu',
-    name: 'Tiramisu',
-    source: 'crafted',
-    cost: null,
+  'mustard-greens': {
+    id: 'mustard-greens',
+    name: 'Mustard Greens',
+    source: 'foraged',
+    cost: 0,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in composite recipes',
+    emoji: '\u{1F33F}',
+    notes: 'Dreamlight Cinematic event wild green',
   },
-  'recipe-house-salad': {
-    id: 'recipe-house-salad',
-    name: 'House Salad',
-    source: 'crafted',
-    cost: null,
+
+  // Foraged (Limited Flower)
+  dandelion: {
+    id: 'dandelion',
+    name: 'Dandelion',
+    source: 'foraged',
+    cost: 0,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in composite recipes',
+    emoji: '\u{1F33C}',
+    notes: 'Dreamlight Cinematic event limited flower',
   },
-  'recipe-smoked-fish-bagel': {
-    id: 'recipe-smoked-fish-bagel',
-    name: 'Smoked Fish Bagel',
-    source: 'crafted',
-    cost: null,
+
+  // Farmed (Limited Crop)
+  'romaine-lettuce': {
+    id: 'romaine-lettuce',
+    name: 'Romaine Lettuce',
+    source: 'farmed',
+    cost: 10,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in composite recipes',
+    emoji: '\u{1F96C}',
+    notes: 'Seed cost 10G (Dreamlight Cinematic event crop)',
   },
-  'recipe-seafood-risotto': {
-    id: 'recipe-seafood-risotto',
-    name: 'Seafood Risotto',
-    source: 'crafted',
-    cost: null,
+
+  // Wildcards (Dreamlight Cinematic)
+  'any-wild-green': {
+    id: 'any-wild-green',
+    name: 'Any Wild Green',
+    source: 'foraged',
+    cost: 0,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in composite recipes',
+    isWildcard: true,
+    wildcardOptions: ['fiddlehead', 'tall-mustard', 'burdock', 'mustard-greens'],
+    notes: 'Dreamlight Cinematic event wild greens',
   },
-  'recipe-tomato-sauce': {
-    id: 'recipe-tomato-sauce',
-    name: 'Tomato Sauce',
-    source: 'crafted',
-    cost: null,
+
+  // Dreamlight Cinematic Event — New Shop/Event Ingredients
+  'springday-brown-sugar': {
+    id: 'springday-brown-sugar',
+    name: 'Springday Brown Sugar',
+    source: 'shop',
+    cost: 50,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Seafood Pizza and Meat Burger',
+    notes: 'Dreamlight Cinematic event limited ingredient (assumed 50G)',
   },
-  'recipe-coffee': {
-    id: 'recipe-coffee',
-    name: 'Coffee',
-    source: 'crafted',
-    cost: null,
+  salsa: {
+    id: 'salsa',
+    name: 'Salsa',
+    source: 'shop',
+    cost: 50,
     dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Tiramisu',
+    notes: 'Dreamlight Cinematic event limited ingredient (assumed 50G)',
   },
-  'recipe-coffee-latte': {
-    id: 'recipe-coffee-latte',
-    name: 'Coffee Latte',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as beverage wildcard option',
-  },
-  'recipe-iced-coffee': {
-    id: 'recipe-iced-coffee',
-    name: 'Iced Coffee',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Aurora Banquet',
-  },
-  'recipe-iced-latte': {
-    id: 'recipe-iced-latte',
-    name: 'Iced Latte',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as beverage wildcard option',
-  },
-  'recipe-original-frosted-pancake': {
-    id: 'recipe-original-frosted-pancake',
-    name: 'Original Frosted Pancake',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Aurora Banquet',
-  },
-  'recipe-steak-w-mashed-white-radish': {
-    id: 'recipe-steak-w-mashed-white-radish',
-    name: 'Steak with Mashed White Radish',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Aurora Banquet',
-  },
-  'recipe-creamy-white-radish-soup': {
-    id: 'recipe-creamy-white-radish-soup',
-    name: 'Creamy White Radish Soup',
-    source: 'crafted',
-    cost: null,
-    dailyLimit: null,
-    notes: 'Crafted recipe used as ingredient in Aurora Banquet',
-  },
+
 };

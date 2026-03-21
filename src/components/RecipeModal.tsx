@@ -3,7 +3,7 @@ import { recipes } from '../data/recipes';
 import { ingredients } from '../data/ingredients';
 import type { Recipe, StarRating as StarRatingType } from '../data/types';
 import { categoryColor } from '../data/recipeConstants';
-import { getSellPrice, getProfit, computeCostToMake } from '../utils/calculations';
+import { getSellPrice, getProfit, computeCostToMake, getIngredientName } from '../utils/calculations';
 import { formatGold, formatProfit, categoryLabel } from '../utils/formatters';
 import { Badge, TbdBadge } from './Badge';
 
@@ -31,8 +31,7 @@ function IngredientRow({
 }) {
   const [expanded, setExpanded] = useState(false);
   const subRecipe = findSubRecipe(ingredientId);
-  const ing = ingredients[ingredientId];
-  const name = ing ? ing.name : ingredientId;
+  const name = getIngredientName(ingredientId);
   const unit = ingredientCost(ingredientId);
   const effectiveQty = quantity * parentMultiplier;
   const sub = unit !== null ? unit * effectiveQty : null;

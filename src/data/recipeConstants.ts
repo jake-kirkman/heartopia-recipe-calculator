@@ -21,6 +21,7 @@ export const categoryColor: Record<RecipeCategory, BadgeVariant> = {
   other: 'wood',
   failure: 'gray',
   'frostspore-event': 'sky',
+  'dreamlight-cinematic': 'coral',
 };
 
 export type SortKey = 'name' | 'level' | 'sell-high' | 'sell-low' | 'profit-high' | 'profit-low';

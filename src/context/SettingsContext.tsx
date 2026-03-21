@@ -6,6 +6,8 @@ import { useLocalStorage } from '../hooks/useLocalStorage';
 interface SettingsContextType {
   frostsporeEnabled: boolean;
   setFrostsporeEnabled: (value: boolean | ((prev: boolean) => boolean)) => void;
+  dreamlightCinematicEnabled: boolean;
+  setDreamlightCinematicEnabled: (value: boolean | ((prev: boolean) => boolean)) => void;
   /** Recipes filtered by current settings (excludes disabled seasonal recipes) */
   visibleRecipes: Recipe[];
 }
@@ -18,13 +20,21 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     false,
   );
 
+  const [dreamlightCinematicEnabled, setDreamlightCinematicEnabled] = useLocalStorage<boolean>(
+    'heartopia-dreamlight-cinematic-enabled',
+    false,
+  );
+
   const visibleRecipes = useMemo(() => {
-    if (frostsporeEnabled) return recipes;
-    return recipes.filter((r) => r.category !== 'frostspore-event');
-  }, [frostsporeEnabled]);
+    return recipes.filter((r) => {
+      if (r.category === 'frostspore-event' && !frostsporeEnabled) return false;
+      if (r.category === 'dreamlight-cinematic' && !dreamlightCinematicEnabled) return false;
+      return true;
+    });
+  }, [frostsporeEnabled, dreamlightCinematicEnabled]);
 
   return (
-    <SettingsContext.Provider value={{ frostsporeEnabled, setFrostsporeEnabled, visibleRecipes }}>
+    <SettingsContext.Provider value={{ frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled, visibleRecipes }}>
       {children}
     </SettingsContext.Provider>
   );
