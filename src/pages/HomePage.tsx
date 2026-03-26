@@ -32,6 +32,12 @@ const features = [
     description: 'Plan cooking sessions and calculate shopping lists',
     icon: '📋',
   },
+  {
+    to: '/compare',
+    title: 'Recipe Comparison',
+    description: 'Compare two recipes side-by-side with color-coded stats',
+    icon: '⚖️',
+  },
 ];
 
 const stats = [
