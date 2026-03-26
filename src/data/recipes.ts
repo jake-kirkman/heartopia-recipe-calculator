@@ -1385,4 +1385,24 @@ export const recipes: Recipe[] = [
     unlock: { method: 'event', description: 'Dreamlight Cinematic event — Popcorn Serving Cart' },
     isComposite: true,
   },
+
+  // ─── Pleasant Goat and Big Bad Wolf Adventure Rally Event ─────────
+  {
+    id: 'grass-cake',
+    name: 'Grass Cake',
+    level: 1,
+    category: 'pleasant-goat-event',
+    ingredients: [
+      { ingredientId: 'wheat', quantity: 1 },
+      { ingredientId: 'milk', quantity: 1 },
+      { ingredientId: 'matcha-powder', quantity: 1 },
+      { ingredientId: 'weed', quantity: 1 },
+    ],
+    basePrice: 690,
+    energy: 50,
+    unlock: {
+      method: 'event',
+      description: 'Pleasant Goat and Big Bad Wolf Adventure Rally event — Day 6 reward',
+    },
+  },
 ];
