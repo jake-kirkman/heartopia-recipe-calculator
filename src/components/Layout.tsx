@@ -15,7 +15,7 @@ const navLinks = [
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { items } = useBatchPlanner();
-  const { frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled } = useSettings();
+  const { frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled, pleasantGoatEnabled, setPleasantGoatEnabled } = useSettings();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const plannerCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -135,8 +135,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               Settings
             </span>
             <span className="text-xs font-normal text-wood/50">
-              {frostsporeEnabled || dreamlightCinematicEnabled
-                ? [frostsporeEnabled && 'Frostspore', dreamlightCinematicEnabled && 'Dreamlight'].filter(Boolean).join(', ') + ' active'
+              {frostsporeEnabled || dreamlightCinematicEnabled || pleasantGoatEnabled
+                ? [frostsporeEnabled && 'Frostspore', dreamlightCinematicEnabled && 'Dreamlight', pleasantGoatEnabled && 'Pleasant Goat'].filter(Boolean).join(', ') + ' active'
                 : 'No events active'}
             </span>
           </button>
@@ -185,6 +185,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     <span
                       className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition duration-200 ease-in-out ${
                         dreamlightCinematicEnabled ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </label>
+
+                <label className="flex items-center justify-between gap-3">
+                  <div>
+                    <span className="font-medium text-wood">Pleasant Goat Event</span>
+                    <p className="text-xs text-wood/60">
+                      Show Pleasant Goat and Big Bad Wolf Adventure Rally event recipes.
+                    </p>
+                  </div>
+                  <button
+                    role="switch"
+                    aria-checked={pleasantGoatEnabled}
+                    onClick={() => setPleasantGoatEnabled((prev) => !prev)}
+                    className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-coral/40 focus:ring-offset-2 ${
+                      pleasantGoatEnabled ? 'bg-coral' : 'bg-wood/30'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition duration-200 ease-in-out ${
+                        pleasantGoatEnabled ? 'translate-x-5' : 'translate-x-0'
                       }`}
                     />
                   </button>

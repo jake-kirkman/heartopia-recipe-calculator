@@ -54,6 +54,7 @@ export function categoryLabel(cat: string): string {
     other: 'Other',
     failure: 'Failure',
     'frostspore-event': 'Frostspore Event',
+    'pleasant-goat-event': 'Pleasant Goat Event',
   };
   return labels[cat] || cat;
 }

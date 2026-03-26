@@ -596,4 +596,16 @@ export const ingredients: Record<string, Ingredient> = {
     notes: 'Dreamlight Cinematic event limited ingredient (assumed 50G)',
   },
 
+
+  // Pleasant Goat and Big Bad Wolf Adventure Rally Event
+  weed: {
+    id: 'weed',
+    name: 'Weed',
+    source: 'foraged',
+    cost: 0,
+    dailyLimit: null,
+    emoji: '🌿',
+    notes: 'Gathered through weeding crop plots',
+  },
+
 };

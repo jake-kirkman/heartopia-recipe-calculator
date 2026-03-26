@@ -18,7 +18,8 @@ export type RecipeCategory =
   | 'other'
   | 'failure'
   | 'frostspore-event'
-  | 'dreamlight-cinematic';
+  | 'dreamlight-cinematic'
+  | 'pleasant-goat-event';
 
 export type UnlockMethod = 'starting' | 'massimo' | 'quest' | 'doris' | 'variant' | 'event';
 
