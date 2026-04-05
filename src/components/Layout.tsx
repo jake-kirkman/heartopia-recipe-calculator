@@ -16,7 +16,7 @@ const navLinks = [
 export function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { items } = useBatchPlanner();
-  const { frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled, pleasantGoatEnabled, setPleasantGoatEnabled } = useSettings();
+  const { frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled, pleasantGoatEnabled, setPleasantGoatEnabled, easterEnabled, setEasterEnabled } = useSettings();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const plannerCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -136,8 +136,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
               Settings
             </span>
             <span className="text-xs font-normal text-wood/50">
-              {frostsporeEnabled || dreamlightCinematicEnabled || pleasantGoatEnabled
-                ? [frostsporeEnabled && 'Frostspore', dreamlightCinematicEnabled && 'Dreamlight', pleasantGoatEnabled && 'Pleasant Goat'].filter(Boolean).join(', ') + ' active'
+              {frostsporeEnabled || dreamlightCinematicEnabled || pleasantGoatEnabled || easterEnabled
+                ? [frostsporeEnabled && 'Frostspore', dreamlightCinematicEnabled && 'Dreamlight', pleasantGoatEnabled && 'Pleasant Goat', easterEnabled && 'Easter'].filter(Boolean).join(', ') + ' active'
                 : 'No events active'}
             </span>
           </button>
@@ -209,6 +209,29 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     <span
                       className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition duration-200 ease-in-out ${
                         pleasantGoatEnabled ? 'translate-x-5' : 'translate-x-0'
+                      }`}
+                    />
+                  </button>
+                </label>
+
+                <label className="flex items-center justify-between gap-3">
+                  <div>
+                    <span className="font-medium text-wood">Easter Event</span>
+                    <p className="text-xs text-wood/60">
+                      Show Easter event recipes (colored eggs, Colorful Egg Feast).
+                    </p>
+                  </div>
+                  <button
+                    role="switch"
+                    aria-checked={easterEnabled}
+                    onClick={() => setEasterEnabled((prev) => !prev)}
+                    className={`relative inline-flex h-6 w-11 flex-shrink-0 rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out cursor-pointer focus:outline-none focus:ring-2 focus:ring-coral/40 focus:ring-offset-2 ${
+                      easterEnabled ? 'bg-coral' : 'bg-wood/30'
+                    }`}
+                  >
+                    <span
+                      className={`pointer-events-none inline-block h-5 w-5 rounded-full bg-white shadow transform transition duration-200 ease-in-out ${
+                        easterEnabled ? 'translate-x-5' : 'translate-x-0'
                       }`}
                     />
                   </button>

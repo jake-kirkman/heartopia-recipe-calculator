@@ -23,6 +23,7 @@ export const categoryColor: Record<RecipeCategory, BadgeVariant> = {
   'frostspore-event': 'sky',
   'dreamlight-cinematic': 'coral',
   'pleasant-goat-event': 'peach',
+  'easter-event': 'mint',
 };
 
 export type SortKey = 'name' | 'level' | 'sell-high' | 'sell-low' | 'profit-high' | 'profit-low';

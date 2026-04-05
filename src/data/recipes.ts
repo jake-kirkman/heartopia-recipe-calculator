@@ -1405,4 +1405,83 @@ export const recipes: Recipe[] = [
       description: 'Pleasant Goat and Big Bad Wolf Adventure Rally event — Day 6 reward',
     },
   },
+
+  // ============================================================
+  // EASTER EVENT
+  // Decorated egg recipes cooked during the Easter event.
+  // Note: these are distinct from "Onsen Egg" (Winter Frost event).
+  // Variant-specific ingredients are placeholders pending confirmation.
+  // ============================================================
+  {
+    id: 'easter-egg',
+    name: 'Egg',
+    level: 1,
+    category: 'easter-event',
+    ingredients: [
+      { ingredientId: 'eggs', quantity: 1 },
+      { ingredientId: 'milk', quantity: 1 },
+    ],
+    basePrice: 190,
+    energy: 20,
+    unlock: { method: 'event', description: 'Easter event recipe' },
+    notes: 'Easter event decorated egg. Distinct from the Winter Frost "Onsen Egg".',
+  },
+  {
+    id: 'easter-purple-egg',
+    name: 'Purple Egg',
+    level: 1,
+    category: 'easter-event',
+    ingredients: [
+      { ingredientId: 'eggs', quantity: 1 },
+      { ingredientId: 'milk', quantity: 1 },
+    ],
+    basePrice: 620,
+    energy: 20,
+    unlock: { method: 'variant', description: 'Easter Egg variant' },
+    notes: 'Easter event variant. Exact ingredients pending confirmation.',
+  },
+  {
+    id: 'easter-green-egg',
+    name: 'Green Egg',
+    level: 1,
+    category: 'easter-event',
+    ingredients: [
+      { ingredientId: 'eggs', quantity: 1 },
+      { ingredientId: 'milk', quantity: 1 },
+    ],
+    basePrice: 570,
+    energy: 20,
+    unlock: { method: 'variant', description: 'Easter Egg variant' },
+    notes: 'Easter event variant. Exact ingredients pending confirmation.',
+  },
+  {
+    id: 'easter-orange-egg',
+    name: 'Orange Egg',
+    level: 1,
+    category: 'easter-event',
+    ingredients: [
+      { ingredientId: 'eggs', quantity: 1 },
+      { ingredientId: 'milk', quantity: 1 },
+    ],
+    basePrice: 190,
+    energy: 20,
+    unlock: { method: 'variant', description: 'Easter Egg variant' },
+    notes: 'Easter event variant. Exact ingredients pending confirmation.',
+  },
+  {
+    id: 'colorful-egg-feast',
+    name: 'Colorful Egg Feast',
+    level: 1,
+    category: 'easter-event',
+    ingredients: [
+      { ingredientId: 'recipe-easter-egg', quantity: 1 },
+      { ingredientId: 'recipe-easter-purple-egg', quantity: 1 },
+      { ingredientId: 'recipe-easter-green-egg', quantity: 1 },
+      { ingredientId: 'recipe-easter-orange-egg', quantity: 1 },
+    ],
+    basePrice: 1650,
+    energy: 55,
+    unlock: { method: 'event', description: 'Easter event composite recipe' },
+    isComposite: true,
+  },
 ];

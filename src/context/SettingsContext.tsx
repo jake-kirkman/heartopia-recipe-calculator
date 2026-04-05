@@ -10,6 +10,8 @@ interface SettingsContextType {
   setDreamlightCinematicEnabled: (value: boolean | ((prev: boolean) => boolean)) => void;
   pleasantGoatEnabled: boolean;
   setPleasantGoatEnabled: (value: boolean | ((prev: boolean) => boolean)) => void;
+  easterEnabled: boolean;
+  setEasterEnabled: (value: boolean | ((prev: boolean) => boolean)) => void;
   /** Recipes filtered by current settings (excludes disabled seasonal recipes) */
   visibleRecipes: Recipe[];
 }
@@ -32,17 +34,23 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
     false,
   );
 
+  const [easterEnabled, setEasterEnabled] = useLocalStorage<boolean>(
+    'heartopia-easter-enabled',
+    false,
+  );
+
   const visibleRecipes = useMemo(() => {
     return recipes.filter((r) => {
       if (r.category === 'frostspore-event' && !frostsporeEnabled) return false;
       if (r.category === 'dreamlight-cinematic' && !dreamlightCinematicEnabled) return false;
       if (r.category === 'pleasant-goat-event' && !pleasantGoatEnabled) return false;
+      if (r.category === 'easter-event' && !easterEnabled) return false;
       return true;
     });
-  }, [frostsporeEnabled, dreamlightCinematicEnabled, pleasantGoatEnabled]);
+  }, [frostsporeEnabled, dreamlightCinematicEnabled, pleasantGoatEnabled, easterEnabled]);
 
   return (
-    <SettingsContext.Provider value={{ frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled, pleasantGoatEnabled, setPleasantGoatEnabled, visibleRecipes }}>
+    <SettingsContext.Provider value={{ frostsporeEnabled, setFrostsporeEnabled, dreamlightCinematicEnabled, setDreamlightCinematicEnabled, pleasantGoatEnabled, setPleasantGoatEnabled, easterEnabled, setEasterEnabled, visibleRecipes }}>
       {children}
     </SettingsContext.Provider>
   );
